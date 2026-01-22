@@ -56,12 +56,13 @@ class Walker {           //Se crea la clase
 ```
 
 **Lo que sucede**
-<img width="629" height="231" alt="image" src="https://github.com/user-attachments/assets/b4240dbd-f593-469f-93f3-66d1e49034f9" />
+
+  <img width="629" height="231" alt="image" src="https://github.com/user-attachments/assets/b4240dbd-f593-469f-93f3-66d1e49034f9" />
 
 
 **¿Ocurrió lo que esperabas? ¿Por qué crees que sí o por qué crees que no?**
 
-Si ocurrió lo que esperaba porque se observa como se crea un punto y una línea que va "caminando" alrededor del canva. Aún así me di cuenta que me confundí al explicar el código y no lo comprendí completamente. Cuando se hace this.y++ en realidad va hacia abajo y con this.y-- va hacia arriba porque sube en píxeles. También  
+Si ocurrió lo que esperaba porque se observa como se crea un punto y una línea que va "caminando" alrededor del canva. Aún así me di cuenta que me confundí al explicar el código y no lo comprendí completamente. Cuando se hace this.y++ en realidad va hacia abajo y con this.y-- va hacia arriba porque sube en píxeles. También noté que tuve algo de confusión al ver tantos walker ya que llevaba un tiempo sin ver el tema, entonces una sería la clase que tiene toda la información, la otra la variable donde se guardan valores y finalmente está el objeto que se desplaza.
 
 ### Actividad 03
 
@@ -74,4 +75,5 @@ Si ocurrió lo que esperaba porque se observa como se crea un punto y una línea
 
 
 ## Bitácora de reflexión
+
 
