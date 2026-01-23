@@ -67,13 +67,23 @@ Si ocurrió lo que esperaba porque se observa como se crea un punto y una línea
 ### Actividad 03
 
 **Diferencia entre una distribución uniforme y una no uniforme de números aleatorios**
+Una distribución normal son las que parecen unas montañas y los valores se aglomeran alrededor de la punta de la montaña que sería la media. Una distribución uniforme es cuando todos los valores tienen la misma proabilidad de ocurrir y no uniforme que hay unos más probables que otros. randomGaussian() es una distribución no uniforme porque hay más probabilidad que los valores estén cerca de la media.
+
+### Actividad 04
+
+Crea un nuevo sketch en p5.js que represente una distribución normal.
+Copia el código en tu bitácora.
+Coloca en enlace a tu sketch en p5.js en tu bitácora.
+Selecciona una captura de pantalla de tu sketch y colócala en tu bitácora.
 
 **Modifica el código de la caminata aleatoria para que utilice una distribución no uniforme, favoreciendo el movimiento hacia la derecha.**
+
 
 ## Bitácora de aplicación 
 
 
 
 ## Bitácora de reflexión
+
 
 
