@@ -111,8 +111,8 @@ class Walker {
   }
 
   step() {
-    const choice = floor(random(6));
-    if (choice == 1 | choice == 2 | choice == 3) {
+    const choice = floor(random(5));
+    if (choice == 1 || choice == 2 || choice == 3) {
       this.x++;
     } else if (choice == 4) {
       this.x--;
@@ -173,6 +173,7 @@ En tu bitácora de aprendizaje. Responde con tus propias palabras a las siguient
 **3. ¿Cuál es el papel de la aleatoriedad en el arte generativo? Menciona al menos dos funciones distintas que cumple**
 **4. Piensa en tu obra final (Actividad 07). Describe uno de los conceptos de aleatoriedad que usaste y explica por qué fue una elección adecuada para lograr el efecto que buscabas.**
 **5. ¿Qué es un “paseo” o “caminata” (walk) en el contexto de la simulación? ¿Qué característica particular tiene una caminata de tipo “Lévy flight”?**
+
 
 
 
