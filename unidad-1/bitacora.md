@@ -160,6 +160,18 @@ https://editor.p5js.org/natalieruizperez/sketches/Qg17275qR
 
 
 ### Actividad 05
+1. Explica por qué usaste esta técnica y qué resultados esperabas obtener.
+**Análisis**
+
+Espero usar el código de levyflight para crear saltos y que quede un círculo blanco en el centro, haciendo que los círculos pequeños generados por el programa respeten esa área.
+
+**Código**
+
+**Enlace**
+
+**Captura**
+
+
 
 ## Bitácora de aplicación 
 
@@ -173,6 +185,7 @@ En tu bitácora de aprendizaje. Responde con tus propias palabras a las siguient
 **3. ¿Cuál es el papel de la aleatoriedad en el arte generativo? Menciona al menos dos funciones distintas que cumple**
 **4. Piensa en tu obra final (Actividad 07). Describe uno de los conceptos de aleatoriedad que usaste y explica por qué fue una elección adecuada para lograr el efecto que buscabas.**
 **5. ¿Qué es un “paseo” o “caminata” (walk) en el contexto de la simulación? ¿Qué característica particular tiene una caminata de tipo “Lévy flight”?**
+
 
 
 
