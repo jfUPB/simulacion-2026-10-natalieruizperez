@@ -3,9 +3,7 @@
 ## Bitácora de proceso de aprendizaje
 
 # Pendiente
--Actividad 03 explicación
--Actividad 04 explicación
--Actividad 05 tarea hacer una distribución inventada con saltos
+
 
 ### Actividad 01
 La aletoriedad influye en la creación de secuencias lo que permite variabilidad y resultados diferentes.
@@ -127,7 +125,8 @@ class Walker {
 ```
 
 ### Actividad 04
-Creo que al crear la variable y voy a poder mover el cuadrardo por la pantalla y estará la mayor parte en el centro, entonces la media sería poca pero la desviación estandár mucha entonces espero que esté distribuída por casi todo el canva en y que en el centro sea más oscuro
+
+Creo que al crear la variable voy a poder mover el cuadrardo por la pantalla y estará la mayor parte en el centro, entonces la media sería poca pero la desviación estandár más grande entonces espero que esté distribuída por casi todo el canva en y que en el centro sea más oscuro
 
 **Sketch en p5.js que represente una distribución normal**
 ```js
@@ -154,27 +153,101 @@ function draw() {
 https://editor.p5js.org/natalieruizperez/sketches/Qg17275qR
 
 **Captura de pantalla**
+
 <img width="624" height="237" alt="image" src="https://github.com/user-attachments/assets/a4e720f5-c5b1-46dc-b926-2da9d77b4cb8" />
 
-**Análisis de resultados**
 
 
 ### Actividad 05
-1. Explica por qué usaste esta técnica y qué resultados esperabas obtener.
-**Análisis**
 
-Espero usar el código de levyflight para crear saltos y que quede un círculo blanco en el centro, haciendo que los círculos pequeños generados por el programa respeten esa área.
-
-**Código**
-
-**Enlace**
-
-**Captura**
-
-
+### Actividad 06
 
 ## Bitácora de aplicación 
 
+**Análisis**
+Mi idea es hacer una onda como las que se ven en los aparato médicos
+
+
+**Código**
+```js
+let walker;
+let hueValue = 0;
+let tx = 0; 
+
+function setup() {
+  createCanvas(640, 240);
+  walker = new Walker();
+  background(0);
+  colorMode(HSB, 360, 100, 100, 1);
+}
+
+function draw() {
+  walker.step();
+  walker.show();
+}
+
+class Walker {
+  constructor() {
+    this.x = 0;
+    this.y = height / 2;
+  }
+
+  show() {
+    noStroke();
+    fill(hueValue, 80, 100, 0.3);
+    circle(this.x, this.y, 16);
+  }
+
+  step() {
+    
+    let noiseSpeed = map(mouseY, 0, height, 0.002, 0.05);
+
+    
+    let xstep = map(noise(tx), 0, 1, 1, 4); 
+    tx += noiseSpeed;
+    this.x += xstep;
+
+   
+    let amp = map(mouseY, 0, height, 5, 80);
+    this.y = height / 2 + map(noise(tx + 1000), 0, 1, -amp, amp);
+
+    
+    if (random(1) < 0.1) { 
+      let px = this.x + random(-50, 50); 
+      let py = this.y + random(-50, 50); 
+      noStroke();
+      fill(hueValue, 80, 100, 0.3);
+      circle(px, py, 16);
+    }
+
+    
+    if (this.x > width) {
+      this.x = 0;
+    }
+  }
+}
+
+
+function mousePressed() {
+  hueValue = random(360);
+}
+
+
+function keyPressed() {
+  if (key === ' ') {  
+    background(0);     
+    walker.x = 0;      
+  }
+}
+```
+
+**Enlace**
+https://editor.p5js.org/natalieruizperez/sketches/XrpMOkONB
+
+
+**Captura**
+
+<img width="623" height="235" alt="image" src="https://github.com/user-attachments/assets/2f779b76-f32c-436f-a9d6-ca138779bda1" />
 
 
 ## Bitácora de reflexión
@@ -185,6 +258,7 @@ En tu bitácora de aprendizaje. Responde con tus propias palabras a las siguient
 **3. ¿Cuál es el papel de la aleatoriedad en el arte generativo? Menciona al menos dos funciones distintas que cumple**
 **4. Piensa en tu obra final (Actividad 07). Describe uno de los conceptos de aleatoriedad que usaste y explica por qué fue una elección adecuada para lograr el efecto que buscabas.**
 **5. ¿Qué es un “paseo” o “caminata” (walk) en el contexto de la simulación? ¿Qué característica particular tiene una caminata de tipo “Lévy flight”?**
+
 
 
 
