@@ -212,6 +212,54 @@ https://editor.p5js.org/natalieruizperez/sketches/eXLHRUD7x
 
 ### Actividad 06
 
+**Código**
+
+```js
+let t = 0.0;
+
+function setup() {
+  createCanvas(360, 240);
+}
+
+function draw() {
+  background(0); 
+  let xoff = t;
+
+  let prevY = noise(xoff) * height;
+  let prevX = 0;
+  xoff += 0.05;
+
+  for (let i = 1; i < width; i++) {
+    let y = noise(xoff) * height;
+    xoff += 0.05;
+   
+    let base = map(y, 0, height, 5, 1);
+    
+    let pulse = map(noise(t * 5), 0, 1, -3, 3);
+    
+    let thick = base + pulse;
+
+    strokeWeight(thick);
+    stroke(0, 255, 0); 
+
+    line(prevX, prevY, i, y);
+
+    prevX = i;
+    prevY = y;
+  }
+
+  t += 0.02; 
+}
+```
+
+**Enlace**
+https://editor.p5js.org/natalieruizperez/sketches/bBVl2oDB2
+
+**Captura**
+
+<img width="347" height="232" alt="image" src="https://github.com/user-attachments/assets/36fce3b9-8ee2-4cb7-9bc4-53014025359d" />
+
+<img width="349" height="238" alt="image" src="https://github.com/user-attachments/assets/e1a41a4b-9921-468b-99b1-b18ed4f61dcd" />
 
 
 ## Bitácora de aplicación 
@@ -310,6 +358,7 @@ En tu bitácora de aprendizaje. Responde con tus propias palabras a las siguient
 **3. ¿Cuál es el papel de la aleatoriedad en el arte generativo? Menciona al menos dos funciones distintas que cumple**
 **4. Piensa en tu obra final (Actividad 07). Describe uno de los conceptos de aleatoriedad que usaste y explica por qué fue una elección adecuada para lograr el efecto que buscabas.**
 **5. ¿Qué es un “paseo” o “caminata” (walk) en el contexto de la simulación? ¿Qué característica particular tiene una caminata de tipo “Lévy flight”?**
+
 
 
 
