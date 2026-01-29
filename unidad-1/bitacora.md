@@ -2,7 +2,7 @@
 
 ## Bitácora de proceso de aprendizaje
 
-# Pendiente
+
 
 
 ### Actividad 01
@@ -77,7 +77,7 @@ No ocurrió lo que esperaba porque en la foto se observa como el cuadrado serpen
 Una distribución normal son las que parecen unas montañas y los valores se aglomeran alrededor de la punta de la montaña que sería la media. Una distribución uniforme es cuando todos los números tienen la misma probabilidad de salir y no uniforme que hay unos más probables que otros. randomGaussian() es una distribución no uniforme porque hay más probabilidad que los valores estén cerca de la media.
 
 **Modifica el código de la caminata aleatoria para que utilice una distribución no uniforme, favoreciendo el movimiento hacia la derecha.**
-En el código considero que favorece el movimiento hacia la derecha porque ya hay 3/5 probabilidades de que vaya hacia la derecha y los 2/5 restantes queda para los demás movimientos
+En el código considero que favorece el movimiento hacia la derecha porque ya hay más probabilidad que ha que haga los demás movimientos.
 ```js
 // The Nature of Code
 // Daniel Shiffman
@@ -147,7 +147,6 @@ function draw() {
   fill(0, 10);
   square(x, y, 16);
 }
-
 ```
 **Enlace**
 https://editor.p5js.org/natalieruizperez/sketches/Qg17275qR
@@ -160,12 +159,65 @@ https://editor.p5js.org/natalieruizperez/sketches/Qg17275qR
 
 ### Actividad 05
 
+**Análisis**
+
+Creo que mantendra la línea recta de puntos que se concentran más en la mitadp pero que se crearán aleatoriamente puntos alrededor.
+
+**Código**
+
+```js
+// The Nature of Code
+// Daniel Shiffman
+// http://natureofcode.com
+
+function setup() {
+  createCanvas(640, 240);
+  background(255);
+}
+
+function draw() {
+ 
+  let x = randomGaussian(320, 60);
+  let y = 120;
+
+  
+  let r = random(1);
+  let xstep, ystep;
+
+  if (r < 0.5) { 
+    xstep = random(-100, 100);
+    ystep = random(-100, 100);
+  } else { // 99% pasos pequeños
+    xstep = random(-1, 1);
+    ystep = random(-1, 1);
+  }
+
+  let newX = constrain(x + xstep, 0, width);
+  let newY = constrain(y + ystep, 0, height);
+
+
+  noStroke();
+  fill(0, 10);
+  circle(newX, newY, 16);
+}
+```
+
+**Captura de patalla** 
+
+<img width="626" height="234" alt="image" src="https://github.com/user-attachments/assets/7ea1cd5e-dabc-4596-9090-f20b13bb43a3" />
+
+**Enlace**
+
+https://editor.p5js.org/natalieruizperez/sketches/eXLHRUD7x
+
 ### Actividad 06
+
+
 
 ## Bitácora de aplicación 
 
 **Análisis**
-Mi idea es hacer una onda como las que se ven en los aparato médicos
+Mi idea es hacer una onda como las que se ven en los aparato médicos y que se pudiera controlar al mover el mouse. Pense que podria lograr esto usando un walker que fuera en linea recta horizontal y después agregarle noise. Para que el resto de canva no se viera vacio agregúe el concepto de levy flight y asi de vez en cuando saltarian puntos aleaotorios.
 
 
 **Código**
@@ -258,6 +310,7 @@ En tu bitácora de aprendizaje. Responde con tus propias palabras a las siguient
 **3. ¿Cuál es el papel de la aleatoriedad en el arte generativo? Menciona al menos dos funciones distintas que cumple**
 **4. Piensa en tu obra final (Actividad 07). Describe uno de los conceptos de aleatoriedad que usaste y explica por qué fue una elección adecuada para lograr el efecto que buscabas.**
 **5. ¿Qué es un “paseo” o “caminata” (walk) en el contexto de la simulación? ¿Qué característica particular tiene una caminata de tipo “Lévy flight”?**
+
 
 
 
