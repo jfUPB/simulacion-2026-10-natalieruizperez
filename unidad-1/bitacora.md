@@ -351,13 +351,26 @@ https://editor.p5js.org/natalieruizperez/sketches/XrpMOkONB
 
 
 ## Bitácora de reflexión
-En tu bitácora de aprendizaje. Responde con tus propias palabras a las siguientes preguntas.
 
 **1. Describe la diferencia fundamental entre la aleatoriedad generada por random() y la apariencia de aleatoriedad del Ruido Perlin (noise()). ¿En qué tipo de situación usarías cada una?**
+
+La diferencia fundamental entre aletoriedad y ruido perlin es que cuando se usa la función random() esta puede crear saltos repentinos de un lugar a otro, en cambio perlin noise es más suave. Si yo fuera a hacer un terreno o una visual que no puede tener cambios bruscos usaría ruido perlin porque permite una transcición suave, en cambio si quisiera generar patrones de forma aleatoriea sin ninguna relación con el otro como por ejemplo puntos en la pantalla usaría random()
+
 **2. Explica con tus palabras qué es una distribución de probabilidad. ¿Qué diferencia visual produce una caminata aleatoria con una distribución uniforme versus una con una distribución normal?**
+
+Una distribución de probabilidad es aquella que dice que tan seguido puede cambiar la visuaol. Una caminata alatoria con una distribución uniforme variaría y tendría la misma probabilidad como su nombre lo indica para que ocurra el salto, en cambio con una distribución normal es parecida a una gaussiana en donde los elementos se van a concentrar alrededor de la media y tendrán una desviación controlada según los parámetros que se pongan.
+
 **3. ¿Cuál es el papel de la aleatoriedad en el arte generativo? Menciona al menos dos funciones distintas que cumple**
+
+El papel de aletoriedad en el arte generativo es muy importante porque hace que se puedan crear obras únicas y variantes lo que permite que el creador pueda concentrarse en manejar otros parámetros para crear el efecto que desea. El arte generativo a veces puede dar la sensación de ser muy complejo por tener visuales impactantes automatizadas. Se puede lograr por ejemplo con random(), randomGaussian() y también noise()
+
 **4. Piensa en tu obra final (Actividad 07). Describe uno de los conceptos de aleatoriedad que usaste y explica por qué fue una elección adecuada para lograr el efecto que buscabas.**
+
+Al hacer la actividad 07 noté que se veía muy vacía la línea el centro y que no se veía tan mágico así que agregué levy flight para que tuviese cierta probabilidad de hacer un salto, así habría más variedad.
+
 **5. ¿Qué es un “paseo” o “caminata” (walk) en el contexto de la simulación? ¿Qué característica particular tiene una caminata de tipo “Lévy flight”?**
+
+Una caminata en el contexto de simulación es una variable que crea números aleatorios y según el número que salga avanza en una direcció9n específica. La diferencia con levy flight es que cuando se habla de caminata es en línea junta y lo que varía es la dirección, en cambio en la otra se generan saltos más bruscos.
 
 
 
