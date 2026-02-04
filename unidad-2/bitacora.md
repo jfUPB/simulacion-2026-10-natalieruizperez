@@ -18,6 +18,7 @@ No se puede hacer la suma de vectores porque ese operador no soporta la suma.
 
 **Código**
 
+```js
 // The Nature of Code
 // Daniel Shiffman
 // http://natureofcode.com
@@ -58,7 +59,7 @@ class Walker {
     }
   }
 }
-
+```
 
 ### Activdad 04
 Los vectores se pasan por referencia y no es una copia de posición si no la dirección de memoria de un objeto (puntero).
@@ -119,4 +120,5 @@ Describe el concepto de tu obra generativa. Explica el concepto de tu obra gener
 **Código**
 **Enlace**
 **Capturas**
+
 
