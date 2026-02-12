@@ -2,7 +2,12 @@
 
 ## Bitácora de proceso de aprendizaje
 ### Actividad 01
-**Busca inspiración**
+
+<img width="780" height="557" alt="image" src="https://github.com/user-attachments/assets/8e18c18f-5191-4b5f-b220-bd1fe0a6a34f" />
+
+<img width="640" height="180" alt="image" src="https://github.com/user-attachments/assets/3571009b-9995-4d20-ac9b-c873690248ee" />
+
+<img width="833" height="646" alt="image" src="https://github.com/user-attachments/assets/be179af7-6bc6-4409-a45c-f7e598559b29" />
 
 ### Actividad 02
 **1. ¿Cómo funciona la suma dos vectores en p5.js?**
@@ -106,34 +111,22 @@ Sirve para saber el ángulo entre los vectores, si son paralelos, perpendiculare
 
 Los dos hacen lo mismo pero se llaman de forma diferente.
 
-
 **5. Ahora el mismo periodista curioso de antes te pregunta si le puedes dar una intuición geométrica acerca del producto cruz. Entonces te pregunta ¿Cuál es la interpretación geométrica del producto cruz de dos vectores? Tu respuesta debe incluir qué pasa con la orientación y la magnitud del vector resultante.**
 
 Al hacer el producto cruz de dos vectores se obtiene un nuevo vector que es perpendicular a los vectores, tiene la misma magnitud que ellos y la dirección depende también de los demás.
-
 
 **6. ¿Para que te puede servir el método dist()?**
 
 Para la distancia entre puntos.
 
-
 **7. ¿Para qué sirven los métodos normalize() y limit()?**
 
 Limit es para limitar el vector y no sea más grande y normalize para que el vector sea unitario, entonces limit se puede usar para controlar la velocidad y normalize para preocuparse solo por la dirección.
 
-### Actividad 06
-**1. ¿Para qué sirve el método mag()? Nota que hay otro método llamado magSq(). ¿Cuál es la diferencia entre ambos? ¿Cuál es más eficiente?**
-**2. ¿Para qué sirve el método normalize()?**
-**3. Te encuentras con un periodista en la calle y te pregunta ¿Para qué sirve el método dot()? ¿Qué le responderías en un frase?**
-**4. El método dot() tiene una versión estática y una de instancia. ¿Cuál es la diferencia entre ambas?**
-**5. Ahora el mismo periodista curioso de antes te pregunta si le puedes dar una intuición geométrica acerca del producto cruz. Entonces te pregunta ¿Cuál es la interpretación geométrica del producto cruz de dos vectores? Tu respuesta debe incluir qué pasa con la orientación y la magnitud del vector resultante.**
-**6. ¿Para que te puede servir el método dist()?**
-**7. ¿Para qué sirven los métodos normalize() y limit()?**
-
 ### Actividad 07
 **1. Cuál es el concepto del marco motion 101 y cómo se interpreta geométricamente.**
 
-El concepto de marco motion 101 consiste en tomar primero la velocidad y después se obtiene la posición. Se hace al contrario a lo intuitivo que sería realizar la integración de euler  se conoce como cuando se integra la posición para hallar velocidad y velocidad para hallar aceleración. Nosotros usamos a semi-implicit y se toma desde uno en lugar de 0. La de verlet se usa cuando las partículas están concectadas por constraints. El marco motion 101 se interpreta geométricamente a través de vectores que tienen la posición y la velocidad 
+El concepto de marco motion 101 consiste en tomar primero la velocidad y después se obtiene la posición. Se hace al contrario a lo intuitivo que sería realizar la integración de euler  se conoce como cuando se integra la posición para hallar velocidad y velocidad para hallar aceleración. Nosotros usamos a semi-implicit y se toma desde uno en lugar de 0. La de verlet se usa cuando las partículas están concectadas por constraints. El marco motion 101 se interpreta geométricamente a través de vectores que tienen la posición y la velocidad.
 
 **2. ¿Cómo se aplica motion 101 en el ejemplo?**
 
@@ -147,16 +140,107 @@ En la aceleración constante inicialmente empezará lento pero a medida que pasa
 
 ## Bitácora de aplicación 
 
-Describe el concepto de tu obra generativa. Explica el concepto de tu obra generativa, qué regla aplicaste para la aceleración por qué si fue una decisión de diseño o qué te evoca si fue una exploración artística.
+**Concepto**
+Gotas de lluvia de colores que al apretar click son atraídas a la posición del mouse. Usé aceleración alatoria para generar esa sensación de las gotas cuando caen y también usé aceleración hacia el mouse para hacer que todas se concentraran en una misma parte, decidí eso porque quería hacer algo inesperado. Escogí las gotas de colores aleatorios para que se viera más mágico y fondo negro para que resaltaran.
+
 **Código**
+
+Mover
+```js
+class Mover {
+  constructor() {
+    this.position = createVector(random(width), random(height));
+    this.velocity = createVector();
+    this.acceleration = createVector();
+    this.topSpeed = 5; 
+    this.size = 10;
+    this.color = color(random(255), random(255), random(255), 200);
+    this.followMouse = false;
+  }
+
+  update() {
+    if (this.followMouse) {
+      
+      let mouseVec = createVector(mouseX, mouseY);
+      let dir = p5.Vector.sub(mouseVec, this.position); 
+      dir.normalize(); 
+      dir.mult(0.2);   
+      this.acceleration = dir;
+    } else {
+      
+      this.acceleration = createVector(random(-0.05, 0.05), random(0.05, 0.2));
+    }
+
+    this.velocity.add(this.acceleration);
+    this.velocity.limit(this.topSpeed);
+    this.position.add(this.velocity);
+  }
+
+  show() {
+    stroke(0);
+    strokeWeight(1);
+    fill(this.color);
+    circle(this.position.x, this.position.y, this.size);
+  }
+
+  checkEdges() {
+    if (this.position.x > width) this.position.x = 0;
+    if (this.position.x < 0) this.position.x = width;
+    if (this.position.y > height) {
+      this.position.y = 0;
+      this.position.x = random(width);
+      this.velocity.mult(0);
+    }
+  }
+}
+```
+
+Sketch
+```js
+let movers = [];
+let total = 200;
+
+function setup() {
+  createCanvas(640, 240);
+  for (let i = 0; i < total; i++) {
+    movers.push(new Mover());
+  }
+}
+
+function draw() {
+  background(0); 
+
+  for (let mover of movers) {
+    mover.update();
+    mover.checkEdges();
+    mover.show();
+  }
+}
+
+function mousePressed() {
+  for (let mover of movers) {
+    mover.followMouse = !mover.followMouse;
+  }
+}
+```
+
 **Enlace**
+https://editor.p5js.org/natalieruizperez/sketches/x4qJCrbWh
+
+
 **Capturas**
+
+<img width="638" height="238" alt="image" src="https://github.com/user-attachments/assets/e06d4579-0368-4318-b790-9d99d02b2955" />
+
+<img width="634" height="226" alt="image" src="https://github.com/user-attachments/assets/587ed4d3-1476-4df9-91e1-6dbed42086cd" />
+
 
 ## Bitácora de reflexión
 **Describe el concepto de tu obra generativa. Explica el concepto de tu obra generativa.**
 **Código**
 **Enlace**
 **Capturas**
+
 
 
 
