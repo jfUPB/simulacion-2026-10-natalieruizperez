@@ -236,10 +236,125 @@ https://editor.p5js.org/natalieruizperez/sketches/x4qJCrbWh
 
 
 ## Bitácora de reflexión
-**Describe el concepto de tu obra generativa. Explica el concepto de tu obra generativa.**
+
+**Concepto**
+Círculos rojos y azules que caen y al apretar click los rojos aceleraran hacia el mouse y los azules le alejaran de los rojos. No quería modificar a gran escala el concepto que hice para la actividad anterior entonces conservé lo primordial que era la lluvia y la aceleración hacia el mousey para diferenciar mejor las partículas escogí dos colores rojo y azul.
+
 **Código**
+
+Mover
+```js
+class Mover {
+  constructor() {
+    this.position = createVector(random(width), random(height));
+    this.velocity = createVector();
+    this.acceleration = createVector();
+    this.topSpeed = 5; 
+    this.size = 10;
+    this.color = random([color(255, 0, 0, 200), color(0, 0, 255, 200)]);
+    this.followMouse = false;
+  }
+
+  update(movers) {
+    this.acceleration.mult(0); 
+
+    
+    if (this.followMouse) {
+      let mouseVec = createVector(mouseX, mouseY);
+      let dir = p5.Vector.sub(mouseVec, this.position); 
+      dir.normalize(); 
+      dir.mult(0.2);   
+      this.acceleration = dir;
+    } else {
+      
+      this.acceleration = createVector(random(-0.05, 0.05), random(0.05, 0.2));
+    }
+
+    
+    if (repel && this.color.levels[0] === 0 && this.color.levels[1] === 0 && this.color.levels[2] === 255) {
+      for (let other of movers) {
+        if (other.color.levels[0] === 255) { 
+          let diff = p5.Vector.sub(this.position, other.position);
+          let d = diff.mag();
+          if (d < 100 && d > 0) { 
+            diff.normalize();
+            diff.div(d); 
+            diff.mult(1);
+            this.acceleration.add(diff);
+          }
+        }
+      }
+    }
+
+    this.velocity.add(this.acceleration);
+    this.velocity.limit(this.topSpeed);
+    this.position.add(this.velocity);
+  }
+
+  show() {
+    stroke(0);
+    strokeWeight(1);
+    fill(this.color);
+    circle(this.position.x, this.position.y, this.size);
+  }
+
+  checkEdges() {
+    if (this.position.x > width) this.position.x = 0;
+    if (this.position.x < 0) this.position.x = width;
+    if (this.position.y > height) {
+      this.position.y = 0;
+      this.position.x = random(width);
+      this.velocity.mult(0);
+    }
+  }
+}
+```
+
+Sketch
+```js
+
+let movers = [];
+let total = 200;
+let repel = false; 
+function setup() {
+  createCanvas(640, 240);
+  for (let i = 0; i < total; i++) {
+    movers.push(new Mover());
+  }
+}
+
+function draw() {
+  background(0); 
+
+  for (let mover of movers) {
+    mover.update(movers);
+    mover.checkEdges();
+    mover.show();
+  }
+}
+
+function mousePressed() {
+  repel = !repel; 
+  for (let mover of movers) {
+   
+    if (mover.color.levels[0] === 255 && mover.color.levels[1] === 0 && mover.color.levels[2] === 0) {
+      mover.followMouse = !mover.followMouse;
+    }
+  }
+}
+```
+
 **Enlace**
+https://editor.p5js.org/natalieruizperez/sketches/-JoYilG4Z
+
 **Capturas**
+
+<img width="637" height="241" alt="image" src="https://github.com/user-attachments/assets/484df725-b511-475e-96db-0472b5f2a715" />
+
+<img width="620" height="234" alt="image" src="https://github.com/user-attachments/assets/b2390db2-0e0b-47d9-8730-a3190c3ffc18" />
+
+
+
 
 
 
