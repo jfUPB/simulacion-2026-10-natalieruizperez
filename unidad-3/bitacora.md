@@ -10,6 +10,10 @@ Siempre ha sido difícil destacar cuando se trata de arte pero ahora más que nu
 
 ### Actividad 02
 
+**Reflexión**
+
+Entre lasventajas que hay de trabajar de manera modular estan que se puede trabjar al mismo tiempo.En la unidad pasada se recalculaba la velocidad frame by frame. Ahora cualquier interacción con señales externas se aplicarán fuerzas con y se usarán métodos para mantener todo separado de forma correcta. Se definen las fuerzas y luego se integran con la velocidad y la posición pero se reiniciará la aceleración porque se actualizará cada segundo. Como el applyForce es paso por referecia se pasa la dirección de esa variable y se terminaría modificando el objeto, una solución sería crear un objeto temporal-
+
 ### Actividad 03
 
 ## Bitácora de aplicación 
@@ -18,3 +22,4 @@ Siempre ha sido difícil destacar cuando se trata de arte pero ahora más que nu
 
 
 ## Bitácora de reflexión
+
