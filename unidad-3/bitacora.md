@@ -23,7 +23,152 @@ Entre lasventajas que hay de trabajar de manera modular estan que se puede trabj
 
 ### Actividad 04
 
+**Explicación**
+
+**Código**
+
+**Enlace**
+
+**Capturas**
+
 
 ## Bitácora de reflexión
+
+
+🌊 Código completo adaptado a tu idea
+🔹 Clase Mover
+class Mover {
+  constructor(x, y, m) {
+    this.mass = m;
+    this.radius = m * 8;
+    this.position = createVector(x, y);
+    this.velocity = createVector(0, 0);
+    this.acceleration = createVector(0, 0);
+  }
+
+  applyForce(force) {
+    let f = p5.Vector.div(force, this.mass);
+    this.acceleration.add(f);
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
+  }
+
+  show() {
+    stroke(0);
+    fill(180);
+    circle(this.position.x, this.position.y, this.radius * 2);
+  }
+
+  checkEdges() {
+    if (this.position.y < this.radius) {
+      this.position.y = this.radius;
+      this.velocity.y *= -0.5;
+    }
+    if (this.position.y > height - this.radius) {
+      this.position.y = height - this.radius;
+      this.velocity.y *= -0.5;
+    }
+  }
+}
+🔹 Clase Liquid
+class Liquid {
+  constructor(x, y, w, h, c) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.c = c;
+  }
+
+  contains(mover) {
+    let pos = mover.position;
+    return (
+      pos.x > this.x &&
+      pos.x < this.x + this.w &&
+      pos.y > this.y &&
+      pos.y < this.y + this.h
+    );
+  }
+
+  calculateDrag(mover) {
+    let speed = mover.velocity.mag();
+    let dragMagnitude = this.c * speed * speed;
+
+    let dragForce = mover.velocity.copy();
+    dragForce.mult(-1);
+    dragForce.setMag(dragMagnitude);
+
+    return dragForce;
+  }
+
+  show() {
+    noStroke();
+    fill(180, 200, 255, 150);
+    rect(this.x, this.y, this.w, this.h);
+  }
+}
+🔹 Sketch principal
+let movers = [];
+let liquid;
+let windActive = true;
+
+function setup() {
+  createCanvas(800, 500);
+
+  // Agua ocupa mitad inferior
+  liquid = new Liquid(0, height / 2, width, height / 2, 0.15);
+
+  // Crear círculos ENCIMA del agua
+  for (let i = 0; i < 10; i++) {
+    movers.push(new Mover(random(width), random(50, height / 2 - 20), random(1, 3)));
+  }
+}
+
+function draw() {
+  background(255);
+
+  liquid.show();
+
+  for (let mover of movers) {
+
+    // 🌬️ VIENTO HACIA ARRIBA (solo si está activo y está en el aire)
+    if (windActive && !liquid.contains(mover)) {
+      let wind = createVector(0, -0.05 * mover.mass);
+      mover.applyForce(wind);
+    }
+
+    // 🌎 GRAVEDAD (solo cuando haces click)
+    if (mouseIsPressed) {
+      let gravity = createVector(0, 0.2 * mover.mass);
+      mover.applyForce(gravity);
+    }
+
+    // 🌊 DRAG EN EL AGUA
+    if (liquid.contains(mover)) {
+      let drag = liquid.calculateDrag(mover);
+      mover.applyForce(drag);
+
+      // gravedad más suave dentro del agua
+      let gravity = createVector(0, 0.05 * mover.mass);
+      mover.applyForce(gravity);
+    }
+
+    mover.update();
+    mover.checkEdges();
+    mover.show();
+  }
+}
+
+function mousePressed() {
+  windActive = false;
+}
+
+function mouseReleased() {
+  windActive = true;
+}
 
 
