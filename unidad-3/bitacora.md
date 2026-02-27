@@ -16,6 +16,276 @@ Entre lasventajas que hay de trabajar de manera modular estan que se puede trabj
 
 <img width="512" height="323" alt="image" src="https://github.com/user-attachments/assets/119ba86f-214b-478e-a3ba-50ebcbe2a43e" />
 
+### Actividad 03
+
+**Atracción gravitacional**
+
+Orbitan alrededor del círculo en el centro.
+
+<img width="621" height="394" alt="image" src="https://github.com/user-attachments/assets/642a71b4-39ef-4e05-bed4-21aa505af7b4" />
+
+
+Attractor
+```js
+class Attractor {
+  constructor() {
+    this.position = createVector(width / 2, height / 2);
+    this.mass = 20;
+    this.dragOffset = createVector(0, 0);
+    this.dragging = false;
+    this.rollover = false;
+  }
+
+  attract(mover) {
+    let force = p5.Vector.sub(this.position, mover.position);
+    let distance = force.mag();
+    distance = max(distance, 5); // evita fuerza infinita
+    let strength = (G * this.mass * mover.mass) / (distance * distance);
+    force.setMag(strength);
+    return force;
+  }
+
+  show() {
+    strokeWeight(4);
+    stroke(0);
+    if (this.dragging) fill(50);
+    else if (this.rollover) fill(100);
+    else fill(175, 200);
+    circle(this.position.x, this.position.y, this.mass * 2);
+  }
+
+  handlePress(mx, my) {
+    let d = dist(mx, my, this.position.x, this.position.y);
+    if (d < this.mass) {
+      this.dragging = true;
+      this.dragOffset.x = this.position.x - mx;
+      this.dragOffset.y = this.position.y - my;
+    }
+  }
+
+  handleHover(mx, my) {
+    let d = dist(mx, my, this.position.x, this.position.y);
+    this.rollover = d < this.mass;
+  }
+
+  stopDragging() {
+    this.dragging = false;
+  }
+
+  handleDrag(mx, my) {
+    if (this.dragging) {
+      this.position.x = mx + this.dragOffset.x;
+      this.position.y = my + this.dragOffset.y;
+    }
+  }
+}
+```
+
+Mover
+
+```js
+class Mover {
+  constructor(x, y, mass) {
+    this.mass = mass;
+    this.radius = mass * 8;
+    this.position = createVector(x, y);
+    this.velocity = createVector(0, 0);
+    this.acceleration = createVector(0, 0);
+  }
+
+  applyForce(force) {
+    let f = p5.Vector.div(force, this.mass);
+    this.acceleration.add(f);
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
+  }
+
+  show() {
+    stroke(0);
+    strokeWeight(2);
+    fill(127, 127);
+    circle(this.position.x, this.position.y, this.radius * 2);
+  }
+}
+```
+
+Sketch
+
+```js
+let movers = [];
+let attractor;
+let G = 1; // constante gravitacional
+
+function setup() {
+  createCanvas(640, 400);
+  attractor = new Attractor();
+
+  // Crear 20 movers con órbita inicial
+  for (let i = 0; i < 20; i++) {
+    let x = random(width);
+    let y = random(height);
+    let m = random(1, 4);
+
+    let mover = new Mover(x, y, m);
+
+    // Vector desde attractor hasta mover
+    let direction = p5.Vector.sub(createVector(x, y), attractor.position);
+    let distance = direction.mag();
+
+    // Velocidad perpendicular para órbita
+    let perpendicular = createVector(-direction.y, direction.x).normalize();
+    let speed = sqrt((G * attractor.mass) / distance);
+    perpendicular.mult(speed);
+
+    mover.velocity = perpendicular;
+    movers.push(mover);
+  }
+}
+
+function draw() {
+  background(255);
+
+  attractor.show();
+
+  for (let mover of movers) {
+    let force = attractor.attract(mover);
+    mover.applyForce(force);
+    mover.update();
+    mover.show();
+  }
+}
+
+// Interacción con el mouse
+function mouseMoved() {
+  attractor.handleHover(mouseX, mouseY);
+}
+
+function mousePressed() {
+  attractor.handlePress(mouseX, mouseY);
+}
+
+function mouseDragged() {
+  attractor.handleHover(mouseX, mouseY);
+  attractor.handleDrag(mouseX, mouseY);
+}
+
+function mouseReleased() {
+  attractor.stopDragging();
+}
+```
+
+**Resistencia al aire y fluidos**
+
+
+**Fricción**
+
+Sketch
+
+```js
+let movers = [];
+
+function setup() {
+  createCanvas(640, 240);
+  createP('Click mouse to apply wind force.');
+
+  // Crear varias pelotas con diferentes masas y fricciones
+  for (let i = 0; i < 5; i++) {
+    let m = random(2, 8);          // masa
+    let friction = random(0.05, 0.3); // fricción
+    movers.push(new Mover(random(width), 30, m, friction));
+  }
+}
+
+function draw() {
+  background(255);
+
+  let gravity = createVector(0, 1);
+
+  for (let mover of movers) {
+    mover.applyForce(gravity);
+
+    if (mouseIsPressed) {
+      let wind = createVector(0.5, 0);
+      mover.applyForce(wind);
+    }
+
+    mover.applyFriction();
+    mover.bounceEdges();
+    mover.update();
+    mover.show();
+  }
+}
+
+```
+
+Mover
+
+```js
+class Mover {
+  constructor(x, y, m, friction) {
+    this.mass = m;
+    this.radius = m * 8;
+    this.position = createVector(x, y);
+    this.velocity = createVector(0, 0);
+    this.acceleration = createVector(0, 0);
+    this.frictionCoeff = friction; // coeficiente de fricción
+  }
+
+  applyForce(force) {
+    let f = p5.Vector.div(force, this.mass);
+    this.acceleration.add(f);
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
+  }
+
+  show() {
+    stroke(0);
+    strokeWeight(2);
+    fill(127, 127);
+    circle(this.position.x, this.position.y, this.radius * 2);
+  }
+
+  contactEdge() {
+    return (this.position.y > height - this.radius - 1);
+  }
+
+  applyFriction() {
+    if (this.contactEdge()) {
+      let friction = this.velocity.copy();
+      friction.mult(-1);
+      friction.setMag(this.frictionCoeff);
+      this.applyForce(friction);
+    }
+  }
+
+  bounceEdges() {
+    let bounce = -0.9;
+    if (this.position.x > width - this.radius) {
+      this.position.x = width - this.radius;
+      this.velocity.x *= bounce;
+    } else if (this.position.x < this.radius) {
+      this.position.x = this.radius;
+      this.velocity.x *= bounce;
+    }
+    if (this.position.y > height - this.radius) {
+      this.position.y = height - this.radius;
+      this.velocity.y *= bounce;
+    }
+  }
+}
+```
+
+
+
+
 
 ### Actividad 03
 
@@ -227,6 +497,7 @@ https://editor.p5js.org/natalieruizperez/sketches/5w2KWuBew
 
 
 ## Bitácora de reflexión
+
 
 
 
