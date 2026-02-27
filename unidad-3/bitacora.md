@@ -183,6 +183,11 @@ function mouseReleased() {
 
 **Fricción**
 
+Pelotas que caen con fricción y al apretar click afecta el viento.
+
+<img width="620" height="266" alt="image" src="https://github.com/user-attachments/assets/e6e5347e-dce3-49ba-876a-89919b54bad0" />
+
+
 Sketch
 
 ```js
@@ -497,6 +502,7 @@ https://editor.p5js.org/natalieruizperez/sketches/5w2KWuBew
 
 
 ## Bitácora de reflexión
+
 
 
 
