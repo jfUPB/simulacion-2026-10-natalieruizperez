@@ -499,9 +499,174 @@ https://editor.p5js.org/natalieruizperez/sketches/5w2KWuBew
 
 
 
-
-
 ## Bitácora de reflexión
+
+**¿Qué es el marco de movimiento motion 101 y cómo se relacionan: fuerza, aceleración, velocidad y posición?**
+
+El marco de motion 101 es diferente a lo que se suele hacer, normalmetne se toma primero la posición, después la velocidad y luego con eso se halla la aceleración, en el motion 101 a partir de la fuerza se añade la aceleración y se actualiza la velocidad y posición.
+
+
+ **Crea una obra generativa inspirada en la obra de Calder que seleccionaste y el marco de movimiento motion 101 con fuerzas que trabajamos en esta unidad.**
+
+Me inspiré por el uso de círculos en eol pecho y el estómago de está obra de Calder donde mostraba a Josephine una bailaría que lo atraía. Al ver esos espirales inmediatamente la obra me transmitió movimiento entonces quiero crear una obra generativa donde se muevan en espiral.
+
+<img width="871" height="1440" alt="image" src="https://github.com/user-attachments/assets/074e2a6b-590a-4381-83cd-96545c303e19" />
+
+**Explicación** 
+
+Cree una obra en la que hay un círculo y alrededor se genera el espiral al apretar click, luego de hacerla pensé que se vería bien como una visual de concierto que reacciona a los beats. 
+
+**Código**
+
+Sketch
+
+```js
+let attractor;
+let G = 1;
+
+// Cada espiral es un array de Movers
+let spirals = [];
+
+function setup() {
+  createCanvas(700, 700);
+  attractor = new Attractor(width/2, height/2, 30);
+
+  // Crear el primer espiral
+  spirals.push(createSpiral());
+  background(255);
+}
+
+function draw() {
+  background(255, 25);
+
+  stroke(0);
+  strokeWeight(1);
+  noFill();
+
+  for (let spiral of spirals) {
+    beginShape();
+    for (let m of spiral) {
+      m.applySpiralForce(attractor, frameCount);
+      m.update();
+      vertex(m.position.x, m.position.y);
+    }
+    endShape();
+  }
+
+  attractor.show();
+}
+
+// Cuando se hace click, generar un nuevo espiral
+function mousePressed() {
+  spirals.push(createSpiral());
+}
+
+// Función que genera un espiral completo como array de Movers
+function createSpiral() {
+  let newSpiral = [];
+  let angleStep = 0.15;
+  let maxAngle = 20;
+  let offsetX = random(-50, 50); // ligero desplazamiento para variación
+  let offsetY = random(-50, 50);
+
+  for (let a = 0; a < maxAngle; a += angleStep) {
+    let r = 12 * a;
+    let x = width/2 + r * cos(a) + offsetX;
+    let y = height/2 + r * sin(a) + offsetY;
+    newSpiral.push(new Mover(x, y, 1));
+  }
+  return newSpiral;
+}
+
+```
+
+Mover
+
+```js
+class Mover {
+  constructor(x, y, mass) {
+    this.mass = mass;
+    this.position = createVector(x, y);
+    this.velocity = createVector(0, 0);
+    this.acceleration = createVector(0, 0);
+  }
+
+  applyForce(force) {
+    let f = p5.Vector.div(force, this.mass);
+    this.acceleration.add(f);
+  }
+
+  applySpiralForce(attractor, t) {
+
+    // 1. Gravedad hacia el centro
+    let gravity = attractor.attract(this);
+    this.applyForce(gravity);
+
+    // 2. Fuerza tangencial → giro
+    let dir = p5.Vector.sub(attractor.position, this.position);
+    let tangent = createVector(-dir.y, dir.x);
+    tangent.normalize();
+    tangent.mult(0.25);
+    this.applyForce(tangent);
+
+    // 3. Fuerza radial oscilante → ondas
+    let d = dir.mag();
+    dir.normalize();
+    let wave = sin(t * 0.05 + d * 0.05) * 0.8;
+    let radialWave = dir.copy().mult(wave);
+    this.applyForce(radialWave);
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    this.velocity.mult(0.985); // damping
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
+  }
+}
+```
+
+Attractor
+```js
+class Attractor {
+  constructor(x, y, mass) {
+    this.position = createVector(x, y);
+    this.mass = mass;
+  }
+
+  attract(mover) {
+    let force = p5.Vector.sub(this.position, mover.position);
+    let distance = constrain(force.mag(), 5, 400);
+
+    let strength = (G * this.mass * mover.mass) / (distance * distance);
+    force.setMag(strength);
+
+    return force;
+  }
+
+  show() {
+    noStroke();
+    fill(0);
+    // Pulso orgánico
+    let pulse = sin(frameCount * 0.1) * 3;
+    circle(this.position.x, this.position.y, this.mass * 2 + pulse);
+  }
+}
+
+```
+
+**Enlace**
+
+https://editor.p5js.org/natalieruizperez/sketches/CSCs0lT9u
+
+**Capturas**
+
+<img width="550" height="551" alt="image" src="https://github.com/user-attachments/assets/af7017da-ff8b-416d-b5d3-a2c2c7e5db33" />
+
+<img width="569" height="561" alt="image" src="https://github.com/user-attachments/assets/18a3adaf-2396-4c5e-afac-2b458d99e683" />
+
+<img width="569" height="559" alt="image" src="https://github.com/user-attachments/assets/8b48d111-5543-4b6f-b444-7e46b2363587" />
+
 
 
 
