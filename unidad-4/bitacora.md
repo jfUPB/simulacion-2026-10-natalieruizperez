@@ -50,9 +50,18 @@ La función push y pop
 
 **Identifica motion 101. ¿Qué modificación hay que hacer al motion 101 cuando se quiere agregar fuerzas acumulativas? Trata de recordar por qué es necesario hacer esta modificación.**
 
+Se toma la velocidad y se entegra para obtener el ángulo y se entegra la aceleración angular para obtener la velocidad.
+
+
 **Identifica dónde está el Attractor en la simulación. Cambia el color de este.**
 
-**Observa que el Attractor tiene dos atributos this.dragging y this.rollover. Estos atributos no se modifican en el código, pero permitirían mover el attractor con el mouse y cambiar su color cuando el mouse está sobre él. ¿Cómo podrías modificar el código para que esto funcione? considera las funciones que ofrece p5.js para interactuar con el mouse.**
+El attractor es la bola grande del centro.
+
+**Observa que el Attractor tiene dos atributos this.dragging y this.rollover. Estos atributos no se modifican en el código, pero permitirían mover el attractor con el mouse y cambiar su color cuando el mouse está sobre él.¿Cómo podrías modificar el código para que esto funcione? considera las funciones que ofrece p5.js para interactuar con el mouse.**
+
+### Actividad 05
+
+Observa de nuevo esta parte del código ¿Cuál es la relación entre r y theta con las posiciones x y y? Puedes repasar entonces la definición de coordenadas polares y cómo se convierten a coordenadas cartesianas.
 
 
 ## Bitácora de aplicación 
@@ -60,4 +69,5 @@ La función push y pop
 
 
 ## Bitácora de reflexión
+
 
