@@ -44,6 +44,8 @@ La función push y pop
 ### Actividad 03
 
 
+
+
 ### Actividad 04
 
 **Identifica motion 101. ¿Qué modificación hay que hacer al motion 101 cuando se quiere agregar fuerzas acumulativas? Trata de recordar por qué es necesario hacer esta modificación.**
@@ -58,3 +60,4 @@ La función push y pop
 
 
 ## Bitácora de reflexión
+
