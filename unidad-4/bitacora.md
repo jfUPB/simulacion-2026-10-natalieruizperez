@@ -64,10 +64,17 @@ El attractor es la bola grande del centro.
 Observa de nuevo esta parte del código ¿Cuál es la relación entre r y theta con las posiciones x y y? Puedes repasar entonces la definición de coordenadas polares y cómo se convierten a coordenadas cartesianas.
 
 
+### Activdad 06
+
+**Reflexión**
+
+La función sinusoide es la que representa el seno, t es la variable independiente, a es la amplitud de la onda punto máximo y mínimo. W es la frecuencia angular y esta relacionada con la frecuencia entonces si es muy grande se vería más de dos picos y si es pequeña menos de dos picos. Un ciclo es cada cuanto se repite la señal entonces tiene que pasar dos veces por 0. Cuando el tiempo es 0 y la fase uno entonces el seno empezaría en otr aparte entonces como que se desplazaría 
+
 ## Bitácora de aplicación 
 
 
 
 ## Bitácora de reflexión
+
 
 
