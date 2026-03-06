@@ -68,13 +68,54 @@ Observa de nuevo esta parte del código ¿Cuál es la relación entre r y theta 
 
 **Reflexión**
 
-La función sinusoide es la que representa el seno, t es la variable independiente, a es la amplitud de la onda punto máximo y mínimo. W es la frecuencia angular y esta relacionada con la frecuencia entonces si es muy grande se vería más de dos picos y si es pequeña menos de dos picos. Un ciclo es cada cuanto se repite la señal entonces tiene que pasar dos veces por 0. Cuando el tiempo es 0 y la fase uno entonces el seno empezaría en otr aparte entonces como que se desplazaría 
+La función sinusoide es la que representa el seno, t es la variable independiente, a es la amplitud de la onda punto máximo y mínimo. W es la frecuencia angular y esta relacionada con la frecuencia entonces si es muy grande se vería más de dos picos y si es pequeña menos de dos picos. Un ciclo es cada cuanto se repite la señal entonces tiene que pasar dos veces por 0. Cuando el tiempo es 0 y la fase uno entonces el seno empezaría en otr aparte entonces como que se desplazaría.
+
+```js
+let period1 = 100;
+let period2 = 120;
+
+let amplitude = 150;
+let phase = 0;
+
+function setup() {
+  createCanvas(640, 240);
+  // phase = TWO_PI/8;
+  
+}
+
+function draw() {
+  
+  let y = amplitude * sin( ((TWO_PI * frameCount) / period1));
+  let x2 = amplitude * sin( ((TWO_PI * frameCount) / period2) + phase);
+
+  stroke(0);
+  strokeWeight(2);
+  translate(width / 2, height / 2);
+
+  fill(0,0,255);
+
+  circle(0, y, 48);
+  
+  
+  fill(255,0,0);
+  circle(x2, 0, 48);  
+}
+
+function keyPressed(){
+  phase += TWO_PI/360;  
+}
+```
+
+### Actividad 07
+
+
 
 ## Bitácora de aplicación 
 
 
 
 ## Bitácora de reflexión
+
 
 
 
