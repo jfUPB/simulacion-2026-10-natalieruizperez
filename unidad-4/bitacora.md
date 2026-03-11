@@ -244,8 +244,10 @@ class Mover {
 }
 ```
 
+https://editor.p5js.org/natalieruizperez/sketches/lrFESDjRG
 
 ## Bitácora de reflexión
+
 
 
 
