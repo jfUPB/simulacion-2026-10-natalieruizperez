@@ -112,9 +112,141 @@ function keyPressed(){
 
 ## Bitácora de aplicación 
 
+Sketch
+```
+let startAngle = 0;
+let angleVelocity = 0.2;
+
+let movers = [];
+let liquid;
+
+function setup() {
+  createCanvas(640, 240);
+
+  liquid = new Liquid(0, height / 2, width, height / 2, 0.1);
+
+  for (let x = 0; x <= width; x += 24) {
+    movers.push(new Mover(x, height / 4, random(1, 2)));
+  }
+}
+
+function draw() {
+  background(255);
+
+  liquid.show();
+
+  let angle = startAngle;
+  startAngle += 0.02;
+
+  for (let i = 0; i < movers.length; i++) {
+
+    let mover = movers[i];
+
+    // fuerza que sigue la onda
+    let targetY = map(sin(angle), -1, 1, 0, height);
+    let waveForce = createVector(0, targetY - mover.position.y);
+    waveForce.mult(0.02);
+    mover.applyForce(waveForce);
+
+    if (liquid.contains(mover)) {
+      let dragForce = liquid.calculateDrag(mover);
+      mover.applyForce(dragForce);
+    }
+
+    let gravity = createVector(0, 0.05 * mover.mass);
+    mover.applyForce(gravity);
+
+    mover.update();
+    mover.show();
+    mover.checkEdges();
+
+    angle += angleVelocity;
+  }
+}
+```
+
+Liquid
+```
+class Liquid {
+  constructor(x, y, w, h, c) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.c = c;
+  }
+
+  contains(mover) {
+    let pos = mover.position;
+    return (
+      pos.x > this.x &&
+      pos.x < this.x + this.w &&
+      pos.y > this.y &&
+      pos.y < this.y + this.h
+    );
+  }
+
+  calculateDrag(mover) {
+    let speed = mover.velocity.mag();
+    let dragMagnitude = this.c * speed * speed;
+
+    let dragForce = mover.velocity.copy();
+    dragForce.mult(-1);
+    dragForce.setMag(dragMagnitude);
+
+    return dragForce;
+  }
+
+  show() {
+    noStroke();
+    fill(200, 220, 255, 150);
+    rect(this.x, this.y, this.w, this.h);
+  }
+}
+```
+
+Mover
+```
+class Mover {
+  constructor(x, y, mass) {
+    this.mass = mass;
+    this.radius = mass * 8;
+
+    this.position = createVector(x, y);
+    this.velocity = createVector(0, 0);
+    this.acceleration = createVector(0, 0);
+  }
+
+  applyForce(force) {
+    let f = p5.Vector.div(force, this.mass);
+    this.acceleration.add(f);
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
+  }
+
+  show() {
+    stroke(0);
+    strokeWeight(2);
+    fill(127, 127);
+    circle(this.position.x, this.position.y, this.radius * 2);
+  }
+
+  checkEdges() {
+    if (this.position.y > height - this.radius) {
+      this.velocity.y *= -0.9;
+      this.position.y = height - this.radius;
+    }
+  }
+}
+```
 
 
 ## Bitácora de reflexión
+
 
 
 
