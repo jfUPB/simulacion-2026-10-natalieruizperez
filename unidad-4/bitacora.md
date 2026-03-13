@@ -113,6 +113,10 @@ function keyPressed(){
 
 ## Bitácora de aplicación 
 
+**Explicación**
+
+Galaxia inestable.
+
 Bob
 ```
 class Bob {
@@ -306,8 +310,10 @@ https://editor.p5js.org/natalieruizperez/sketches/lrFESDjRG
 
 **Capturas**
 
+https://imgur.com/a/Iw7Q4n3
 
 ## Bitácora de reflexión
+
 
 
 
