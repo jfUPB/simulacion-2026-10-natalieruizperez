@@ -20,6 +20,7 @@ Al presionar las tecla se van rotando los elementos gráficos (círculos y líne
 
 
 **Nota que en cada frame se está trasladando el origen del sistema de coordenadas al centro de la pantalla. ¿Por qué crees que se hace esto?**
+
 Creo que se usan puntos fijos porque ese 
 
 **Cuál es la relación entre el sistema de coordenadas y la función rotate().**
@@ -112,109 +113,19 @@ function keyPressed(){
 
 ## Bitácora de aplicación 
 
-Sketch
+Bob
 ```
-let startAngle = 0;
-let angleVelocity = 0.2;
-
-let movers = [];
-let liquid;
-
-function setup() {
-  createCanvas(640, 240);
-
-  liquid = new Liquid(0, height / 2, width, height / 2, 0.1);
-
-  for (let x = 0; x <= width; x += 24) {
-    movers.push(new Mover(x, height / 4, random(1, 2)));
-  }
-}
-
-function draw() {
-  background(255);
-
-  liquid.show();
-
-  let angle = startAngle;
-  startAngle += 0.02;
-
-  for (let i = 0; i < movers.length; i++) {
-
-    let mover = movers[i];
-
-    // fuerza que sigue la onda
-    let targetY = map(sin(angle), -1, 1, 0, height);
-    let waveForce = createVector(0, targetY - mover.position.y);
-    waveForce.mult(0.02);
-    mover.applyForce(waveForce);
-
-    if (liquid.contains(mover)) {
-      let dragForce = liquid.calculateDrag(mover);
-      mover.applyForce(dragForce);
-    }
-
-    let gravity = createVector(0, 0.05 * mover.mass);
-    mover.applyForce(gravity);
-
-    mover.update();
-    mover.show();
-    mover.checkEdges();
-
-    angle += angleVelocity;
-  }
-}
-```
-
-Liquid
-```
-class Liquid {
-  constructor(x, y, w, h, c) {
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
-    this.c = c;
-  }
-
-  contains(mover) {
-    let pos = mover.position;
-    return (
-      pos.x > this.x &&
-      pos.x < this.x + this.w &&
-      pos.y > this.y &&
-      pos.y < this.y + this.h
-    );
-  }
-
-  calculateDrag(mover) {
-    let speed = mover.velocity.mag();
-    let dragMagnitude = this.c * speed * speed;
-
-    let dragForce = mover.velocity.copy();
-    dragForce.mult(-1);
-    dragForce.setMag(dragMagnitude);
-
-    return dragForce;
-  }
-
-  show() {
-    noStroke();
-    fill(200, 220, 255, 150);
-    rect(this.x, this.y, this.w, this.h);
-  }
-}
-```
-
-Mover
-```
-class Mover {
-  constructor(x, y, mass) {
-    this.mass = mass;
-    this.radius = mass * 8;
-
+class Bob {
+  constructor(x, y, m) {
     this.position = createVector(x, y);
-    this.velocity = createVector(0, 0);
-    this.acceleration = createVector(0, 0);
+    this.velocity = createVector();
+    this.acceleration = createVector();
+    this.mass = m;
+    this.radius = m * 8;
+
+    this.color = color(random(50, 255), random(50, 255), random(50, 255));
+    this.dragging = false;
+    this.dragOffset = createVector();
   }
 
   applyForce(force) {
@@ -223,30 +134,181 @@ class Mover {
   }
 
   update() {
-    this.velocity.add(this.acceleration);
-    this.position.add(this.velocity);
+    if (!this.dragging) {
+      this.velocity.add(this.acceleration);
+      this.position.add(this.velocity);
+    } else {
+      // Si está siendo arrastrado, se mueve naturalmente hacia la posición del cursor con fuerza
+      this.velocity.add(this.acceleration);
+      this.position.add(this.velocity);
+    }
     this.acceleration.mult(0);
   }
 
   show() {
-    stroke(0);
-    strokeWeight(2);
-    fill(127, 127);
+    noStroke();
+    fill(this.color);
+    if (this.dragging) fill(200);
     circle(this.position.x, this.position.y, this.radius * 2);
   }
 
-  checkEdges() {
-    if (this.position.y > height - this.radius) {
-      this.velocity.y *= -0.9;
-      this.position.y = height - this.radius;
+  handleClick(mx, my) {
+    let d = dist(mx, my, this.position.x, this.position.y);
+    if (d < this.radius) {
+      this.dragging = true;
+      this.dragOffset.x = this.position.x - mx;
+      this.dragOffset.y = this.position.y - my;
+    }
+  }
+
+  stopDragging() {
+    this.dragging = false;
+  }
+
+  handleDrag(mx, my) {
+    if (this.dragging) {
+      this.position.x = mx + this.dragOffset.x;
+      this.position.y = my + this.dragOffset.y;
     }
   }
 }
 ```
 
+Sketch
+```
+let bobs = [];
+let springs = [];
+let center;
+let sunMass = 40; // aún se usa para gravedad
+let G = 1;
+let numBobs = 10;
+
+function setup(){
+  createCanvas(800,500);
+  center = createVector(width/2,height/2);
+
+  for(let i=0;i<numBobs;i++){
+    let angle = random(TWO_PI);
+    let radius = random(60,150);
+    let x = center.x + cos(angle)*radius;
+    let y = center.y + sin(angle)*radius;
+
+    let b = new Bob(x,y,random(1.5,3));
+
+    // Velocidad tangencial inicial para órbita estable
+    let distance = p5.Vector.sub(b.position,center).mag();
+    let speed = sqrt(G*sunMass/distance);
+    let tangent = createVector(-(y-center.y),(x-center.x)).normalize();
+    tangent.mult(speed);
+    b.velocity = tangent;
+
+    bobs.push(b);
+    springs.push(new Spring(center.x,center.y,radius));
+  }
+}
+
+function draw(){
+  background(0);
+
+  for(let i=0;i<bobs.length;i++){
+    let bob = bobs[i];
+
+    // gravedad central
+    let force = p5.Vector.sub(center,bob.position);
+    let distance = force.mag();
+    distance = constrain(distance,20,500);
+    let strength = (G*sunMass*bob.mass)/(distance*distance);
+    force.setMag(strength);
+    bob.applyForce(force);
+
+    // resorte más rígido
+    springs[i].connect(bob);
+
+    bob.update();
+    bob.show();
+    springs[i].showLine(bob);
+  }
+}
+
+// Interactividad
+function mousePressed(){
+  for(let bob of bobs) bob.handleClick(mouseX,mouseY);
+}
+
+function mouseReleased(){
+  for(let bob of bobs) bob.stopDragging();
+}
+
+function mouseDragged(){
+  for(let bob of bobs) bob.handleDrag(mouseX,mouseY);
+}
+```
+
+Spring
+```
+class Spring {
+  constructor(x, y, length){
+    this.anchor = createVector(x,y);
+    this.restLength = length;
+    this.k = 0.2;
+    this.damping = 0.9;
+    this.numPoints = 100; // puntos para la onda
+    this.values = [];
+
+    // Inicializar valores aleatorios para la onda con amplitud controlada
+    for(let i = 0; i < this.numPoints; i++){
+      this.values[i] = random(-10, 10); // ajusta estos valores para menos/más amplitud
+    }
+  }
+
+  connect(bob){
+    let force = p5.Vector.sub(bob.position, this.anchor);
+    let stretch = force.mag() - this.restLength;
+    force.setMag(-this.k * stretch);
+
+    let velAlongSpring = p5.Vector.dot(bob.velocity, force.copy().normalize());
+    let dampingForce = force.copy().normalize().mult(-velAlongSpring * (1 - this.damping));
+    force.add(dampingForce);
+
+    bob.applyForce(force);
+  }
+
+  showLine(bob){
+    stroke(bob.color);
+    strokeWeight(2);
+
+    let dir = p5.Vector.sub(bob.position, this.anchor);
+    let length = dir.mag();
+    let unitDir = dir.copy().normalize();
+
+    let perp = createVector(-unitDir.y, unitDir.x);
+
+    beginShape();
+    for(let i = 0; i < this.numPoints; i++){
+      let t = i / (this.numPoints - 1);
+      let pos = p5.Vector.add(this.anchor, p5.Vector.mult(unitDir, length * t));
+
+      let idx = (i + frameCount) % this.numPoints;
+      let offsetMag = this.values[idx];
+
+      let offset = perp.copy().mult(offsetMag);
+
+      vertex(pos.x + offset.x, pos.y + offset.y);
+    }
+    endShape();
+  }
+}
+```
+
+**Enlace**
+
 https://editor.p5js.org/natalieruizperez/sketches/lrFESDjRG
 
+**Capturas**
+
+
 ## Bitácora de reflexión
+
 
 
 
