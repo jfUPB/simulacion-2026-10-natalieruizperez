@@ -351,8 +351,11 @@ https://imgur.com/a/Iw7Q4n3
 
 **Diagrama**
 
+https://imgur.com/a/jNum6WZ
 
 **Aplicación al perfil profesional**
+
+Como me gusta el 3D creo que puedo usar ideas como vectores, fuerzas y algo de aleatoriedad para hacer que mis escenas y materiales se sientan más vivos con shaders y procesos procedurales. Además, usando noise y variación puedo romper lo perfecto y generar resultados más orgánicos e interesantes visualmente.
 
 
 
