@@ -349,6 +349,11 @@ https://imgur.com/a/Iw7Q4n3
 
 ## Bitácora de reflexión
 
+**Diagrama**
+
+
+**Aplicación al perfil profesional**
+
 
 
 
