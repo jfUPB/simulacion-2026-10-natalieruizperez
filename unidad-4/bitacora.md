@@ -2,26 +2,15 @@
 
 ## Bitácora de proceso de aprendizaje
 
-### Actividad 01
-
-<img width="1099" height="581" alt="image" src="https://github.com/user-attachments/assets/51a1f278-c3f3-484d-ae0d-a0b0d4262c93" />
-
-<img width="1098" height="600" alt="image" src="https://github.com/user-attachments/assets/e87f8416-85e6-4dfc-bdde-33a00b475963" />
-
-<img width="1100" height="619" alt="image" src="https://github.com/user-attachments/assets/30a1ad6a-a638-4a97-999d-59f25d5dfa18" />
-
-Lo que más me llamo la atención es el uso de ondas y sonidos para llegar al espectador. Además da la sensación de 3d en algunas de sus obras y yo soy amante del modelado 3d entonces no puedo evitar pensar en como logra crear esas ondas en el agua que se ven tan mágicas.
-
 ### Actividad 02
 
 **¿Qué está pasando en esta simulación? ¿Cuál es la interacción?**
 
 Al presionar las tecla se van rotando los elementos gráficos (círculos y líneas).
 
-
 **Nota que en cada frame se está trasladando el origen del sistema de coordenadas al centro de la pantalla. ¿Por qué crees que se hace esto?**
 
-Creo que se usan puntos fijos porque ese 
+Creo que se usan puntos fijos para que la rotación ocurra en el centro.
 
 **Cuál es la relación entre el sistema de coordenadas y la función rotate().**
 
@@ -33,18 +22,19 @@ Se actualiza la posición usando motion 101 pero sin fuerzas acumulativas. Se in
 
 **¿Qué hace la función heading()?**
 
-La función heading se encarga de 
+La función heading se encarga de devolver el ángulo.
 
 **¿Qué hace la función push() y pop()? Realiza algunos experimentos para entender su funcionamiento.**
 
-La función push y pop
-
+La función push guarda y la pop restaura.
+ 
 **¿Qué hace rectMode(CENTER)? Realiza algunos experimentos para entender su funcionamiento.**
+
+Es para que el triángulo quede en el centro.
+
 **¿Cuál es la relación entre el ángulo de rotación y el vector de velocidad? Trata de dibujar en un papel el vector de velocidad y cómo se relaciona con el ángulo de rotación y la operación de traslación y rotación.**
 
-### Actividad 03
-
-
+El ángulo representa hacia donde se va a mover la velocidad.
 
 
 ### Actividad 04
@@ -56,13 +46,25 @@ Se toma la velocidad y se entegra para obtener el ángulo y se entegra la aceler
 
 **Identifica dónde está el Attractor en la simulación. Cambia el color de este.**
 
-El attractor es la bola grande del centro.
+El attractor es la bola grande del centro y para que cambie de color habría que modificar el fill.
 
 **Observa que el Attractor tiene dos atributos this.dragging y this.rollover. Estos atributos no se modifican en el código, pero permitirían mover el attractor con el mouse y cambiar su color cuando el mouse está sobre él.¿Cómo podrías modificar el código para que esto funcione? considera las funciones que ofrece p5.js para interactuar con el mouse.**
+
+Se podría usar mousePressed() y mouseReleased(). Cuando el mouse esté sobre el attractor se activa rollover, y al presionar se activa dragging para moverlo.
 
 ### Actividad 05
 
 Observa de nuevo esta parte del código ¿Cuál es la relación entre r y theta con las posiciones x y y? Puedes repasar entonces la definición de coordenadas polares y cómo se convierten a coordenadas cartesianas.
+
+r es la distancia y theta el ángulo. Para convertirla seria usar la fórmula x = rcos(theta) y así se podrá obtener la posición.
+
+**Modifica la función draw(): ¿Qué ocurre? ¿Por qué?**
+
+El punto se mueve alrededor del centro. Eso ocurre porque crea un vector con magnitud 1.
+
+**Ahora realiza esta modificación: ¿Qué ocurre aquí? ¿Por qué?**
+
+El punto se mueve más lejos o más cerca del centro. Esto pasa porque usa r como magnitud del vector, entonces la distancia al origen cambia según el valor de r.
 
 
 ### Activdad 06
@@ -107,18 +109,44 @@ function keyPressed(){
 }
 ```
 
-### Actividad 07
 
+### Actividad 08
+
+```js
+let startAngle = 0;
+let angleVelocity = 0.2;
+
+function setup() {
+  createCanvas(640, 240);
+}
+
+function draw() {
+  background(255);
+
+  let angle = startAngle;
+  startAngle += 0.02;
+
+  for (let x = 0; x <= width; x += 24) {
+    let y = map(sin(angle), -1, 1, 0, height);
+    stroke(0);
+    strokeWeight(2);
+    fill(127, 127);
+    circle(x, y, 48);
+    angle += angleVelocity;
+  }
+}
+```
 
 
 ## Bitácora de aplicación 
 
 **Explicación**
 
-Galaxia inestable.
+**Una galaxia inestable.** Mi idea es implementar un concepto diferente de cada una de las unidades pero de forma cuidadosa para crear una obra cohesiva. Me basaré en la obra de la unidad anterior y habrán planetas que rotan alrededor del centro. Mi interacción será con el mouse y al apretar click y arrastrar los planetas se pueden hacer que reboten porque estarán unidas como si fueran resortes. Finalmente usaré noise para que sea más interesante la línea del resorte y se vea una onda cambiante.
 
 Bob
-```
+
+```js
 class Bob {
   constructor(x, y, m) {
     this.position = createVector(x, y);
@@ -179,7 +207,8 @@ class Bob {
 ```
 
 Sketch
-```
+
+```js
 let bobs = [];
 let springs = [];
 let center;
@@ -249,27 +278,30 @@ function mouseDragged(){
 ```
 
 Spring
-```
+
+```js
 class Spring {
-  constructor(x, y, length){
-    this.anchor = createVector(x,y);
+  constructor(x, y, length) {
+    this.anchor = createVector(x, y);
     this.restLength = length;
     this.k = 0.2;
     this.damping = 0.9;
     this.numPoints = 100; // puntos para la onda
     this.values = [];
 
-    // Inicializar valores aleatorios para la onda con amplitud controlada
-    for(let i = 0; i < this.numPoints; i++){
-      this.values[i] = random(-10, 10); // ajusta estos valores para menos/más amplitud
+    // Inicializar valores de la onda (estilo Daniel Shiffman)
+    for (let i = 0; i < this.numPoints; i++) {
+      this.values[i] = random(-10, 10); // amplitud de la onda
     }
   }
 
-  connect(bob){
+  // Aplica la fuerza de resorte al bob
+  connect(bob) {
     let force = p5.Vector.sub(bob.position, this.anchor);
     let stretch = force.mag() - this.restLength;
     force.setMag(-this.k * stretch);
 
+    // Amortiguamiento a lo largo del resorte
     let velAlongSpring = p5.Vector.dot(bob.velocity, force.copy().normalize());
     let dampingForce = force.copy().normalize().mult(-velAlongSpring * (1 - this.damping));
     force.add(dampingForce);
@@ -277,7 +309,8 @@ class Spring {
     bob.applyForce(force);
   }
 
-  showLine(bob){
+  // Dibuja el resorte
+  showLine(bob) {
     stroke(bob.color);
     strokeWeight(2);
 
@@ -285,22 +318,24 @@ class Spring {
     let length = dir.mag();
     let unitDir = dir.copy().normalize();
 
+    // Vector perpendicular para desplazar la onda
     let perp = createVector(-unitDir.y, unitDir.x);
 
     beginShape();
-    for(let i = 0; i < this.numPoints; i++){
+    for (let i = 0; i < this.numPoints; i++) {
       let t = i / (this.numPoints - 1);
       let pos = p5.Vector.add(this.anchor, p5.Vector.mult(unitDir, length * t));
 
+      // Offset usando array al estilo Shiffman
       let idx = (i + frameCount) % this.numPoints;
       let offsetMag = this.values[idx];
 
       let offset = perp.copy().mult(offsetMag);
-
       vertex(pos.x + offset.x, pos.y + offset.y);
     }
     endShape();
   }
+}
 }
 ```
 
@@ -313,6 +348,7 @@ https://editor.p5js.org/natalieruizperez/sketches/lrFESDjRG
 https://imgur.com/a/Iw7Q4n3
 
 ## Bitácora de reflexión
+
 
 
 
