@@ -21,16 +21,26 @@
 ### Actividad 02
 
 **1. ¿Qué responsabilidades que antes estaban en draw() ahora están dentro de la clase Emitter?**
+Es para encapsular y tener sistemas de sistemas
+
 **2. ¿Cuál es la ventaja de encapsular la lógica de emisión en una clase separada?**
+Se podrán tener
+
 **3. En este ejemplo hay un array de emitters. ¿Quién crea los emitters? ¿Quién crea las partículas dentro de cada emitter?**
+Los emitters los crea 
 **4. Dibuja un diagrama que muestre la jerarquía: sketch → [emitters] → [partículas]. ¿Cuántos niveles de “colección” hay?**
 **5. Describe este ejemplo usando palabras que NO mencionen p5.js, JavaScript, ni ninguna herramienta específica. Usa solo términos como: entidad, estado, colección, emisor, ciclo de vida, fuerza.**
 
 ### Actividad 03
 
 **1. ¿Qué tienen en común las subclases de partículas? ¿Qué tienen de diferente?**
+
+
+
 **2. ¿Por qué es importante que el Emitter no necesite saber qué tipo específico de partícula está gestionando? Explica esto con tus propias palabras.**
+
 **3. Si mañana quisieras agregar un tercer tipo de partícula, ¿Qué tendrías que crear y qué NO tendrías que modificar?**
+
 **4. Compara con Example 4.2: ¿Cambió la lógica del Emitter? ¿Cambió la lógica de muerte? ¿Qué capa del sistema se modificó y cuáles permanecieron intactas?**
 
 ## Bitácora de aplicación 
