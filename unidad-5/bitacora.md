@@ -46,4 +46,111 @@ Los emitters los crea
 ## Bitácora de aplicación 
 
 
+LA INTERACTIVIDAD TIENE QUE TENER CARGA INTERACTIVA
+
 ## Bitácora de reflexión
+
+DropParticle
+class DropParticle extends Particle {
+  constructor(x, y) {
+    super(x, y);
+    this.vel = createVector(0, 2);
+  }
+
+  update() {
+    let gravity = createVector(0, 0.2);
+    this.applyForce(gravity);
+    super.update();
+  }
+
+  display() {
+    noStroke();
+    fill(180, 220, 255);
+    ellipse(this.pos.x, this.pos.y, 6);
+  }
+
+  hitWater() {
+    return this.pos.y >= height / 2;
+  }
+}
+
+Particle
+class Particle {
+  constructor(x, y) {
+    this.pos = createVector(x, y);
+    this.vel = createVector(0, 0);
+    this.acc = createVector(0, 0);
+    this.life = 255;
+  }
+
+  applyForce(f) {
+    this.acc.add(f);
+  }
+
+  update() {
+    this.vel.add(this.acc);
+    this.pos.add(this.vel);
+    this.acc.mult(0);
+  }
+
+  isDead() {
+    return this.life <= 0;
+  }
+}
+
+RippleParticle
+class RippleParticle extends Particle {
+  constructor(x, y) {
+    super(x, y);
+    this.radius = 0;
+  }
+
+  update() {
+    this.radius += 2;   // expansión
+    this.life -= 4;     // se desvanece
+  }
+
+  display() {
+    noFill();
+    stroke(200, 220, 255, this.life);
+    ellipse(this.pos.x, this.pos.y, this.radius);
+  }
+}
+
+Sketch
+let particles = [];
+
+function setup() {
+  createCanvas(600, 400);
+}
+
+function draw() {
+  background(15, 25, 45);
+
+  // agua
+  fill(30, 90, 140);
+  rect(0, height / 2, width, height / 2);
+
+  // sistema de partículas
+  for (let i = particles.length - 1; i >= 0; i--) {
+    let p = particles[i];
+
+    p.update();
+    p.display();
+
+    // si es gota y toca el agua → crear onda
+    if (p instanceof DropParticle && p.hitWater()) {
+      particles.push(new RippleParticle(p.pos.x, height / 2));
+      particles.splice(i, 1);
+    } 
+    else if (p.isDead()) {
+      particles.splice(i, 1);
+    }
+  }
+}
+
+// interacción
+function mousePressed() {
+  particles.push(new DropParticle(mouseX, 0));
+}
+
