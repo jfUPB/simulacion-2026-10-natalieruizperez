@@ -44,7 +44,16 @@ Los emitters los crea
 **4. Compara con Example 4.2: ¿Cambió la lógica del Emitter? ¿Cambió la lógica de muerte? ¿Qué capa del sistema se modificó y cuáles permanecieron intactas?**
 
 ## Bitácora de aplicación 
-veo un problema en el codigo y es que las gotas no chocan directamente con el agua si no que si el agua esta muy baja se queda como en un muro invisible del que no pueden pasar las gotas
+
+**Concepto**
+
+Representación del ciclo del agua como un sistema donde todo está conectado entre sí, tanto el cielo, tierra y platas. El usuario puede interactuar con el sistema para comprender mejor de forma visual que sucede.
+
+**Bocetos**
+
+**Mapa de decisiones**
+
+
 **Cloud**
 
 ```js
@@ -623,6 +632,7 @@ function drawSun() {
 https://editor.p5js.org/natalieruizperez/sketches/0j2h1_Vm3
 
 **Capturas**
+
 <img width="693" height="393" alt="image" src="https://github.com/user-attachments/assets/5632f414-48c8-4386-b46d-344fa58269dd" />
 
 <img width="694" height="389" alt="image" src="https://github.com/user-attachments/assets/5db339ce-ee79-47d6-8ae1-8085990fc634" />
