@@ -44,43 +44,239 @@ Los emitters los crea
 **4. Compara con Example 4.2: ¿Cambió la lógica del Emitter? ¿Cambió la lógica de muerte? ¿Qué capa del sistema se modificó y cuáles permanecieron intactas?**
 
 ## Bitácora de aplicación 
+veo un problema en el codigo y es que las gotas no chocan directamente con el agua si no que si el agua esta muy baja se queda como en un muro invisible del que no pueden pasar las gotas
+**Cloud**
 
+```js
+class Cloud {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.vaporAmount = 0;
+  }
 
-LA INTERACTIVIDAD TIENE QUE TENER CARGA INTERACTIVA
+  addVapor() {
+    this.vaporAmount = constrain(this.vaporAmount + 1, 0, 100);
+  }
 
-## Bitácora de reflexión
+  releaseDrop() {
+    if (this.vaporAmount > 0) {
+      return new DropParticle(
+        this.x + random(-30, 30),
+        this.y + 20
+      );
+    }
+    return null;
+  }
 
-DropParticle
+  contains(px, py) {
+    return dist(px, py, this.x, this.y) < 40;
+  }
+
+  display() {
+    noStroke();
+
+    let size = map(this.vaporAmount, 0, 100, 60, 120);
+    let c = map(this.vaporAmount, 0, 100, 230, 100);
+
+    fill(c);
+
+    ellipse(this.x, this.y, size, size * 0.6);
+    ellipse(this.x - size * 0.3, this.y + 10, size * 0.8, size * 0.5);
+    ellipse(this.x + size * 0.3, this.y + 10, size * 0.8, size * 0.5);
+  }
+}
+```
+
+**DropParticle**
+
+```js
 class DropParticle extends Particle {
   constructor(x, y) {
     super(x, y);
-    this.vel = createVector(0, 2);
+
+    this.vel = createVector(0, random(2, 4));
+
+    this.state = "falling"; // falling, infiltrating, runoff, absorbed
+    this.infiltrationProgress = 0;
+  }
+
+  startInfiltration() {
+    this.state = "infiltrating";
+    this.vel = createVector(0, 0.5);
+  }
+
+  startRunoff() {
+    this.state = "runoff";
+    this.vel = createVector(-1, 0);
   }
 
   update() {
-    let gravity = createVector(0, 0.2);
-    this.applyForce(gravity);
+
+    if (this.state === "falling") {
+      this.applyForce(createVector(0, 0.2));
+    }
+
+    else if (this.state === "infiltrating") {
+      this.infiltrationProgress += 0.02;
+      this.vel.y = 0.5;
+
+      if (this.infiltrationProgress >= 1) {
+        this.state = "absorbed";
+        this.life = 0; // muerte significativa
+      }
+    }
+
+    else if (this.state === "runoff") {
+      this.applyForce(createVector(-0.05, 0.02));
+    }
+
+    super.update();
+  }
+
+  display() {
+
+    if (this.state === "falling") {
+      stroke(0, 150, 255, this.life);
+      line(this.pos.x, this.pos.y, this.pos.x, this.pos.y + 6);
+    }
+
+    else if (this.state === "infiltrating") {
+      noStroke();
+      fill(0, 120, 255, this.life);
+
+      let size = map(this.infiltrationProgress, 0, 1, 4, 1);
+      ellipse(this.pos.x, this.pos.y, size);
+    }
+
+    else if (this.state === "runoff") {
+      stroke(0, 100, 255, this.life);
+      line(this.pos.x, this.pos.y, this.pos.x - 6, this.pos.y);
+    }
+  }
+}
+```
+
+**Plant**
+
+```js
+class Plant {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+
+    this.growth = 0;
+    this.life = 255;
+
+    this.waterLevel = 0.5;
+
+    this.state = "growing"; // growing, flower, dying
+  }
+
+  water() {
+    this.waterLevel += 0.2;
+
+    if (this.state === "growing") {
+      this.growth += 0.2;
+      this.growth = constrain(this.growth, 0, 1);
+    }
+  }
+
+  sun() {
+    if (this.state === "growing" && this.growth > 0.8) {
+      this.state = "flower";
+    }
+  }
+
+  update() {
+
+    // pierde agua con el tiempo
+    this.waterLevel -= 0.003;
+
+    // muerte por exceso o falta
+    if (this.waterLevel < 0 || this.waterLevel > 1.2) {
+      this.state = "dying";
+    }
+
+    if (this.state === "growing") {
+      this.growth += 0.01;
+      this.growth = constrain(this.growth, 0, 1);
+    }
+
+    if (this.state === "dying") {
+      this.life -= 4;
+    }
+  }
+
+  display() {
+    push();
+    translate(this.x, this.y);
+
+    noStroke();
+
+    let h = this.growth * 25;
+
+    // tallo
+    fill(50, 180, 80, this.life);
+    rect(-1, -h, 2, h);
+
+    // hojas
+    ellipse(-3, -h + 5, 6, 4);
+    ellipse(3, -h + 5, 6, 4);
+
+    // flor
+    if (this.state === "flower") {
+      fill(255, 100, 150, this.life);
+      ellipse(0, -h - 3, 8);
+    }
+
+    pop();
+  }
+
+  isDead() {
+    return this.life <= 0;
+  }
+}
+```
+
+**EvaporationParticle**
+
+```js
+class EvaporationParticle extends Particle {
+  constructor(x, y) {
+    super(x, y);
+    this.vel = createVector(random(-0.3, 0.3), random(-1.5, -0.5));
+    this.size = random(4, 8);
+  }
+
+  update() {
+    this.applyForce(createVector(0, -0.02)); // flotabilidad
     super.update();
   }
 
   display() {
     noStroke();
-    fill(180, 220, 255);
-    ellipse(this.pos.x, this.pos.y, 6);
-  }
 
-  hitWater() {
-    return this.pos.y >= height / 2;
+    let size = map(this.life, 255, 0, this.size, 0);
+    let alpha = this.life;
+
+    fill(255, alpha);
+    ellipse(this.pos.x, this.pos.y, size);
   }
 }
+```
 
-Particle
+**Particle**
+
+```js
 class Particle {
   constructor(x, y) {
     this.pos = createVector(x, y);
     this.vel = createVector(0, 0);
     this.acc = createVector(0, 0);
+
     this.life = 255;
+    this.dead = false;
   }
 
   applyForce(f) {
@@ -91,315 +287,356 @@ class Particle {
     this.vel.add(this.acc);
     this.pos.add(this.vel);
     this.acc.mult(0);
+
+    this.life -= 2;
+
+    if (this.life <= 0) {
+      this.dead = true;
+    }
   }
 
   isDead() {
-    return this.life <= 0;
+    return this.dead;
   }
 }
+```
 
-RippleParticle
-class RippleParticle extends Particle {
+**SplashParticle**
+
+```js
+class SplashParticle extends Particle {
   constructor(x, y) {
     super(x, y);
-    this.radius = 0;
+    this.vel = createVector(random(-1, 1), random(-2, -0.5));
   }
 
   update() {
-    this.radius += 2;   // expansión
-    this.life -= 4;     // se desvanece
+    this.applyForce(createVector(0, 0.15));
+    super.update();
   }
 
   display() {
-    noFill();
-    stroke(200, 220, 255, this.life);
-    ellipse(this.pos.x, this.pos.y, this.radius);
+    noStroke();
+
+    let size = map(this.life, 255, 0, 3, 0);
+
+    fill(0, 150, 255, this.life);
+    ellipse(this.pos.x, this.pos.y, size);
   }
 }
+```
 
-Sketch
-let particles = [];
+**sketch**
+```js
+// ================= VARIABLES =================
+let lakeY, lakeMinY, lakeMaxY;
+let groundX, groundY, lakeBottomY;
 
-function setup() {
-  createCanvas(600, 400);
-}
+let clouds = [];
+let draggingCloud = null;
+let offsetX, offsetY;
 
-function draw() {
-  background(15, 25, 45);
-
-  // agua
-  fill(30, 90, 140);
-  rect(0, height / 2, width, height / 2);
-
-  // sistema de partículas
-  for (let i = particles.length - 1; i >= 0; i--) {
-    let p = particles[i];
-
-    p.update();
-    p.display();
-
-    // si es gota y toca el agua → crear onda
-    if (p instanceof DropParticle && p.hitWater()) {
-      particles.push(new RippleParticle(p.pos.x, height / 2));
-      particles.splice(i, 1);
-    } 
-    else if (p.isDead()) {
-      particles.splice(i, 1);
-    }
-  }
-}
-
-// interacción
-function mousePressed() {
-  particles.push(new DropParticle(mouseX, 0));
-}
-
-
-## CODIGO
-tengo este codigo
-
-let lakeY;
-let lakeMinY;
-let lakeMaxY;
-let cloud;
 let drops = [];
 let vapors = [];
+let splashes = [];
+let plants = [];
+
 let waveOffset = 0;
-let dropCooldown = 0;
+
+// cielo
+let currentCloudDarkness = 0;
+let currentSunLight = 0;
 
 // sol
 let sunX = 80;
 let sunY = 80;
 let sunR = 30;
-let rayCount = 12;
-let rayLength = 20;
-let rayAngle = 0; // rotación de los rayos
+let rayAngle = 0;
 
+// ================= SETUP =================
 function setup() {
   createCanvas(700, 400);
-  lakeY = height/2 + 50;
-  lakeMinY = 120;      
-  lakeMaxY = height - 50; 
-  cloud = new Cloud(width/2, 100);
+
+  groundX = width / 2;
+  groundY = height - 120;
+  lakeBottomY = height;
+
+  lakeMinY = groundY + 5;
+  lakeMaxY = lakeBottomY - 5;
+  lakeY = lakeMinY;
+
+  for (let i = 0; i < 3; i++) {
+    clouds.push(new Cloud(
+      width/2 + random(-150, 150),
+      random(60, 140)
+    ));
+  }
 }
 
+// ================= DRAW =================
 function draw() {
-  background(30, 30, 60);
 
-  // dibujar sol con rayos giratorios
+  // cielo dinámico
+  let totalVapor = 0;
+  for (let c of clouds) totalVapor += c.vaporAmount;
+  let avgVapor = totalVapor / clouds.length;
+
+  let targetCloud = avgVapor / 100;
+  let targetSun = (mouseIsPressed && dist(mouseX, mouseY, sunX, sunY) < sunR) ? 1 : 0;
+
+  currentCloudDarkness = lerp(currentCloudDarkness, targetCloud, 0.02);
+  currentSunLight = lerp(currentSunLight, targetSun, 0.05);
+
+  drawSky();
   drawSun();
+  drawLake();
+  drawGround();
 
-  // lago con ondas
-  drawWaves();
+  // evaporación
+  if (mouseIsPressed && dist(mouseX, mouseY, sunX, sunY) < sunR) {
+    if (frameCount % 6 === 0) {
+      vapors.push(new EvaporationParticle(random(0, groundX), lakeY));
 
-  // evaporación solo si presionas sobre el sol
-  if(mouseIsPressed && dist(mouseX, mouseY, sunX, sunY) < sunR){
-    if (cloud.vaporAmount < 100 && lakeY < lakeMaxY && frameCount % 6 === 0) {
-      let vp = new EvaporationParticle(random(0, width/2), lakeY);
-      vapors.push(vp);
-      cloud.addVapor();
+      for (let c of clouds) {
+        if (c.vaporAmount < 100) c.addVapor();
+      }
 
-      lakeY += 2; // evaporación visible
+      lakeY += 1;
       lakeY = constrain(lakeY, lakeMinY, lakeMaxY);
     }
   }
 
-  // actualizar vapor
-  for (let i = vapors.length-1; i>=0; i--){
-    let v = vapors[i];
-    v.update();
-    v.display();
-    if(v.isDead()) vapors.splice(i,1);
-  }
+  // arrastrar nube
+  if (draggingCloud) {
+    draggingCloud.x = mouseX + offsetX;
+    draggingCloud.y = mouseY + offsetY;
 
-  // actualizar gotas
-  for (let i = drops.length-1; i>=0; i--){
-    let d = drops[i];
-    d.update();
-    d.display();
-    if(d.hitGround(height-20)) {
-      drops.splice(i,1);
-      if(lakeY > lakeMinY + 5){
-        lakeY -= 3; 
-        lakeY = constrain(lakeY, lakeMinY, lakeMaxY);
+    if (frameCount % 5 === 0 && draggingCloud.vaporAmount > 0) {
+      let d = draggingCloud.releaseDrop();
+      if (d) {
+        drops.push(d);
+        draggingCloud.vaporAmount--;
       }
     }
   }
 
-  // nube
-  cloud.display();
+  // ================= PARTICULAS =================
 
-  // animar ondas
-  waveOffset += 0.08;
+  // vapor
+  for (let i = vapors.length-1; i >= 0; i--) {
+    let v = vapors[i];
+    v.update();
+    v.display();
+    if (v.isDead()) vapors.splice(i,1);
+  }
 
-  if(dropCooldown > 0) dropCooldown--;
+  // ================= GOTAS (FIX BUENO) =================
+  for (let i = drops.length-1; i >= 0; i--) {
+    let d = drops[i];
+    d.update();
+    d.display();
+
+    let waterSurface = getLakeSurfaceY(d.pos.x);
+
+    // agua
+    if (d.pos.x < groundX && d.pos.y >= waterSurface && d.state === "falling") {
+
+      for (let j = 0; j < 5; j++) {
+        splashes.push(new SplashParticle(d.pos.x, waterSurface));
+      }
+
+      lakeY -= 4;
+      lakeY = constrain(lakeY, lakeMinY, lakeMaxY);
+
+      drops.splice(i,1);
+      continue;
+    }
+
+    // tierra
+    if (d.pos.x >= groundX && d.pos.y >= groundY && d.state === "falling") {
+
+      d.startInfiltration();
+
+      let existing = plants.find(p => dist(p.x, p.y, d.pos.x, groundY) < 10);
+
+      if (existing) {
+        existing.water();
+      } else if (random() < 0.4) {
+        plants.push(new Plant(d.pos.x, groundY));
+      }
+    }
+
+    // escorrentía
+    if (d.state === "runoff" && d.pos.x < groundX && d.pos.y >= waterSurface) {
+
+      for (let j = 0; j < 5; j++) {
+        splashes.push(new SplashParticle(d.pos.x, waterSurface));
+      }
+
+      lakeY -= 3;
+      lakeY = constrain(lakeY, lakeMinY, lakeMaxY);
+
+      drops.splice(i,1);
+      continue;
+    }
+
+    if (d.isDead()) drops.splice(i,1);
+  }
+
+  // splash
+  for (let i = splashes.length-1; i >= 0; i--) {
+    let s = splashes[i];
+    s.update();
+    s.display();
+    if (s.isDead()) splashes.splice(i,1);
+  }
+
+  // plantas
+  let sunActive = mouseIsPressed && dist(mouseX, mouseY, sunX, sunY) < sunR;
+
+  for (let i = plants.length - 1; i >= 0; i--) {
+    let p = plants[i];
+
+    if (sunActive) p.sun();
+
+    p.update();
+    p.display();
+
+    if (p.isDead()) plants.splice(i,1);
+  }
+
+  for (let c of clouds) c.display();
+
+  waveOffset += 0.05;
 }
 
+// ================= INTERACCION =================
 function mousePressed() {
-  if(dropCooldown <= 0){
-    let d = cloud.releaseDrop();
-    if(d){
-      drops.push(d);
-      dropCooldown = 10;
+  for (let c of clouds) {
+    if (c.contains(mouseX, mouseY)) {
+      draggingCloud = c;
+      offsetX = c.x - mouseX;
+      offsetY = c.y - mouseY;
+      break;
     }
   }
 }
 
-function drawWaves() {
+function mouseReleased() {
+  draggingCloud = null;
+}
+
+// ================= AGUA =================
+function getLakeSurfaceY(x) {
+  return lakeY + sin(x * 0.05 + waveOffset) * 6;
+}
+
+// ================= SKY =================
+function drawSky() {
+
+  for (let y = 0; y < height; y++) {
+
+    let inter = map(y, 0, height, 0, 1);
+
+    let topColor = color(30, 30, 60);
+    let bottomColor = color(120, 180, 255);
+
+    let darkTop = color(10, 10, 30);
+    let darkBottom = color(80, 100, 140);
+
+    topColor = lerpColor(topColor, darkTop, currentCloudDarkness);
+    bottomColor = lerpColor(bottomColor, darkBottom, currentCloudDarkness);
+
+    let lightTop = color(100, 140, 220);
+    let lightBottom = color(200, 230, 255);
+
+    topColor = lerpColor(topColor, lightTop, currentSunLight);
+    bottomColor = lerpColor(bottomColor, lightBottom, currentSunLight);
+
+    let c = lerpColor(topColor, bottomColor, inter);
+
+    stroke(c);
+    line(0, y, width, y);
+  }
+}
+
+// ================= LAKE =================
+function drawLake() {
   noStroke();
-  fill(0, 50, 255);
+  fill(0, 80, 255);
+
   beginShape();
-  for (let x = 0; x <= width/2; x += 10) {
-    let y = lakeY + sin(x * 0.05 + waveOffset) * 10;
+  for (let x = 0; x <= groundX; x += 10) {
+    let y = getLakeSurfaceY(x);
     vertex(x, y);
   }
-  vertex(width/2, height);
-  vertex(0, height);
+  vertex(groundX, lakeBottomY);
+  vertex(0, lakeBottomY);
   endShape(CLOSE);
 }
 
-// 🌞 sol con rayos
+// ================= GROUND =================
+function drawGround() {
+  noStroke();
+  fill(120, 80, 50);
+  rect(groundX, groundY, width/2, height - groundY);
+}
+
+// ================= SUN (RESTAURADO) =================
 function drawSun() {
   push();
   translate(sunX, sunY);
-  fill(255, 204, 0);
-  noStroke();
-  ellipse(0, 0, sunR*2);
 
-  stroke(255, 204, 0);
-  strokeWeight(2);
-  for (let i = 0; i < rayCount; i++){
-    let angle = TWO_PI / rayCount * i + rayAngle;
+  let isHeating = mouseIsPressed && dist(mouseX, mouseY, sunX, sunY) < sunR;
+
+  noStroke();
+  fill(255, 204, 0, isHeating ? 120 : 50);
+  ellipse(0, 0, sunR * (isHeating ? 4 : 3));
+
+  fill(255, 204, 0);
+  ellipse(0, 0, sunR * 2);
+
+  stroke(255, 200, 0);
+  strokeWeight(isHeating ? 3 : 2);
+
+  let rayLength = isHeating ? 45 : 20;
+
+  for (let i = 0; i < 12; i++) {
+    let angle = TWO_PI / 12 * i + rayAngle;
+
     let x1 = cos(angle) * sunR;
     let y1 = sin(angle) * sunR;
+
     let x2 = cos(angle) * (sunR + rayLength);
     let y2 = sin(angle) * (sunR + rayLength);
+
     line(x1, y1, x2, y2);
   }
+
   pop();
 
-  rayAngle += 0.03; // velocidad de rotación
+  rayAngle += isHeating ? 0.06 : 0.02;
 }
-class Particle {
-  constructor(x, y) {
-    this.pos = createVector(x, y);
-    this.vel = createVector(0, 0);
-    this.acc = createVector(0, 0);
-    this.life = 255;
-  }
+```
 
-  applyForce(f) {
-    this.acc.add(f);
-  }
+**Enlace**
+https://editor.p5js.org/natalieruizperez/sketches/0j2h1_Vm3
 
-  update() {
-    this.vel.add(this.acc);
-    this.pos.add(this.vel);
-    this.acc.mult(0);
-  }
+**Capturas**
+<img width="693" height="393" alt="image" src="https://github.com/user-attachments/assets/5632f414-48c8-4386-b46d-344fa58269dd" />
 
-  isDead() {
-    return this.life <= 0;
-  }
-}
+<img width="694" height="389" alt="image" src="https://github.com/user-attachments/assets/5db339ce-ee79-47d6-8ae1-8085990fc634" />
 
-class EvaporationParticle {
-  constructor(x, y) {
-    this.pos = createVector(x, y);
-    this.vel = createVector(random(-0.5,0.5), random(-2,-0.5));
-    this.alpha = 200;
-  }
+<img width="689" height="386" alt="image" src="https://github.com/user-attachments/assets/791f87e1-1769-45bd-aaa5-db4f90334fba" />
 
-  update() {
-    this.pos.add(this.vel);
-    this.alpha -= 4;
-  }
+<img width="691" height="392" alt="image" src="https://github.com/user-attachments/assets/880c0798-bd75-4aec-aa2e-857a89a532c7" />
 
-  display() {
-    noStroke();
-    fill(255, this.alpha);
-    ellipse(this.pos.x, this.pos.y, 5,5);
-  }
+<img width="682" height="375" alt="image" src="https://github.com/user-attachments/assets/cb0f17e3-a34e-426b-9293-83fb18529706" />
 
-  isDead() {
-    return this.alpha <= 0;
-  }
-}
 
-class DropParticle {
-  constructor(x, y) {
-    this.pos = createVector(x, y);
-    this.vel = createVector(0, random(4,7));
-  }
 
-  update() {
-    this.pos.add(this.vel);
-  }
 
-  display() {
-    stroke(0, 150, 255);
-    strokeWeight(2);
-    line(this.pos.x, this.pos.y, this.pos.x, this.pos.y + 5);
-  }
 
-  hitGround(y) {
-    return this.pos.y >= y;
-  }
-}
 
-class DropParticle {
-  constructor(x, y) {
-    this.pos = createVector(x, y);
-    this.vel = createVector(0, random(4,7));
-  }
 
-  update() {
-    this.pos.add(this.vel);
-  }
-
-  display() {
-    stroke(0, 150, 255);
-    strokeWeight(2);
-    line(this.pos.x, this.pos.y, this.pos.x, this.pos.y + 5);
-  }
-
-  hitGround(y) {
-    return this.pos.y >= y;
-  }
-}
-
- lo estoy haciendo para cumplor con lo que pide el procesor
-
-pply: Aplicación 🛠
-Actividad 05: Ejercicio de diseño “Ciclos de vida”
-Brief de diseño
-Diseña e implementa una pieza interactiva en p5.js que use un sistema de partículas para representar un ciclo de vida de tu elección.
-
-Un ciclo de vida es cualquier proceso donde algo nace, se transforma y desaparece. Puede ser literal (semillas → flores → pétalos que caen), metafórico (ideas → conversaciones → olvido), emocional (calma → agitación → disolución), natural (estrellas → supernovas → polvo cósmico), o social (rumores que se propagan, se fragmentan y mueren).
-
-Requisitos conceptuales del sistema:
-
-Al menos dos tipos de partículas con comportamientos distintos (herencia y polimorfismo).
-Ciclo de vida visible: las partículas deben nacer, transformarse visualmente durante su vida, y morir. La muerte no puede ser solo “desaparecer”: debe comunicar algo.
-Al menos una fuerza que afecte a las partículas (gravedad, atracción, repulsión, viento, u otra).
-La interacción del usuario debe tener un propósito narrativo claro: no es “hacer click para emitir más partículas”, sino que la interacción debe tener un significado dentro del ciclo de vida que elegiste.
-Gestión correcta de memoria: las partículas muertas se eliminan.
-Nota
-
-Lo que se evalúa NO es la complejidad técnica del código (eso lo puede generar una IA), sino:
-
-La coherencia entre el concepto de ciclo de vida y las decisiones de diseño.
-Que puedas explicar cómo cada elemento del sistema contribuye a comunicar la idea.
-Que la pieza transmita algo reconocible al verla e interactuar con ella.
-📤 Bitácora
-
-Documenta el proceso completo:
-
-Concepto: 2-3 frases sobre qué ciclo de vida representarás y qué emoción o idea quieres comunicar.
-Bocetos: al menos 2 bocetos (pueden ser a mano) que muestren cómo imaginas la pieza antes de programarla.
-Mapa de decisiones: para cada elemento del sistema, explica la decisión de diseño: ¿Por qué esa emisión, esas fuerzas, esa condición de muerte, esa visualización, qué significa la interacción del usuario dentro del concepto?
-Implementación: enlace al código en el editor de p5.js + código fuente en la bitácora.
-Capturas: al menos 3 capturas de momentos diferentes del ciclo de vida.
-
-es del ccilo del agua actualemnte lo que pasa es que al hacer click se activa el sol y la nube al mismo tiempo la idea es que la nube se active al arrastrarla y que caiga el numero de gotas segun si se matiene arrastrada, ese numero de gota son las que consigeu durante la evaporacion 
 
