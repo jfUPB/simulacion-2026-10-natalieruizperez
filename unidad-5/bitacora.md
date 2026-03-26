@@ -3,6 +3,9 @@
 
 ### Actividad 01
 
+<img width="627" height="237" alt="image" src="https://github.com/user-attachments/assets/fbef37cb-37dc-4fec-bdbe-0a4a025f0612" />
+
+
 **1. ¿Qué propiedades tiene cada partícula? Clasifícalas: ¿Cuáles definen su estado físico? ¿Cuáles su estado vital?**
 
 Tienen tiempo de vida, aceleración, velocidad y posición, la primera define su estado vital y las demás su estado físico.
@@ -28,6 +31,12 @@ En el mismo draw se eliminan las partículas con el isDead().
 Se recorre el array en orden inverso para eliminar 
 
 **7. Si no eliminaras nunca las partículas, ¿Qué pasaría con la memoria y el rendimiento? Haz el experimento: comenta la línea que elimina y observa el frame rate.**
+
+Si no eliminara las partícula la memoria se llenaría el rendimiento no sería bueno, podría hasta incluso ocasionar lag.
+
+<img width="1440" height="604" alt="image" src="https://github.com/user-attachments/assets/e9a02803-83ce-421e-864e-f93b480cc877" />
+
+Luego de probarlo se cumplió mi hipótesis, la simulación empezó a ir más lento.
 
 
 **8. ¿Qué elementos visuales usa para representar una partícula?**
