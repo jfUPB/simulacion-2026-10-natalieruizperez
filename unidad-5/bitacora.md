@@ -4,19 +4,43 @@
 ### Actividad 01
 
 **1. ¿Qué propiedades tiene cada partícula? Clasifícalas: ¿Cuáles definen su estado físico? ¿Cuáles su estado vital?**
+
+Tienen tiempo de vida, aceleración, velocidad y posición, la primera define su estado vital y las demás su estado físico.
+
 **2. ¿Qué condición determina que una partícula “muere”? ¿Es una muerte instantánea o gradual?**
+
+isDead() es la función que "mata" la partícula y sucede de forma gradual porque no baja inmediatamente a 0 si no que lo hace de poco a poco.
+
 **3. ¿Cómo se actualiza la partícula en cada frame? Identifica el patrón motion 101 dentro de la partícula.**
 
+Se hace igual que como se hizo en las otras unidades de que primero se toma la aceleración y se le añade a la velocidad y la velocidad se le añade a la posición.
 
 **4. ¿Quién crea las partículas? ¿En qué momento?**
+
+En el draw se crean las partículas con el push en cada frame.
+
 **5. ¿Quién decide cuándo eliminar una partícula del array?**
+
+En el mismo draw se eliminan las partículas con el isDead().
+
 **6. ¿Por qué se recorre el array en orden inverso para eliminar? ¿Qué pasaría si no se hiciera así?**
+
+Se recorre el array en orden inverso para eliminar 
+
 **7. Si no eliminaras nunca las partículas, ¿Qué pasaría con la memoria y el rendimiento? Haz el experimento: comenta la línea que elimina y observa el frame rate.**
 
 
 **8. ¿Qué elementos visuales usa para representar una partícula?**
+
+
+
 **9. ¿Cómo se conecta el “tiempo de vida” con la apariencia visual?**
+
+Cuando está viva la partícula se ve opaca pero a medida que va disminuyendo su tiempo de vida se transparenta hasta desaparecer.
+
 **10. Si quisieras cambiar la representación visual (por ejemplo, usar líneas en vez de círculos), ¿Qué cambiarías y qué NO cambiarías?**
+
+En particle.js en el show() cambiaría únicamente el stroke en donde dice circle, como se está cambiando lo visual no hay que mover lo demás ni nada de la lógica.
 
 ### Actividad 02
 
