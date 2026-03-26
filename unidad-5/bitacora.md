@@ -57,24 +57,39 @@ En particle.js en el show() cambiaría únicamente el stroke en donde dice circl
 Ya en Emitter se crean, actualizan y eliminan partículas en lugar de en el draw.
 
 **2. ¿Cuál es la ventaja de encapsular la lógica de emisión en una clase separada?**
-Se podrán tener
+
+Al hacer esto queda más ordenado ya que draw se concentra en solo la apariencia y también se pueden crear diferentes emisores que son independientes entre si.
 
 **3. En este ejemplo hay un array de emitters. ¿Quién crea los emitters? ¿Quién crea las partículas dentro de cada emitter?**
-Los emitters los crea 
+
+Al hacer click se crean las partículas y se añaden con la función addParticle().
+
 **4. Dibuja un diagrama que muestre la jerarquía: sketch → [emitters] → [partículas]. ¿Cuántos niveles de “colección” hay?**
+
 **5. Describe este ejemplo usando palabras que NO mencionen p5.js, JavaScript, ni ninguna herramienta específica. Usa solo términos como: entidad, estado, colección, emisor, ciclo de vida, fuerza.**
+
+El emisor se encarga de crear y eliminar las entidades, las cuales cambian de estado con el paso del tiempo hasta que termina su ciclo de vida.
 
 ### Actividad 03
 
 **1. ¿Qué tienen en común las subclases de partículas? ¿Qué tienen de diferente?**
 
-
+Son casi las mismas subclases, tienen las mismas variables y tambien un ciclo de vida. La diferencia es que ahora hay otra que se llama confetti que se encarga de asegurar de que caigan en cierto ángulo.
 
 **2. ¿Por qué es importante que el Emitter no necesite saber qué tipo específico de partícula está gestionando? Explica esto con tus propias palabras.**
 
+Porque así no importa el tipo de partícula el editer se encargará de asegurarse de generar la partícula, actualizarla y eliminarla.
+
 **3. Si mañana quisieras agregar un tercer tipo de partícula, ¿Qué tendrías que crear y qué NO tendrías que modificar?**
 
+Simplemente tendría que agregar una nueva clase y no debo de modificar el emitter porque como respondí en el programa anterior a este no le interesa el tipo de partícula.
+
 **4. Compara con Example 4.2: ¿Cambió la lógica del Emitter? ¿Cambió la lógica de muerte? ¿Qué capa del sistema se modificó y cuáles permanecieron intactas?**
+
+Todo es igual en cuanto a lógica lo único es que visualmente son diferentes y también que se creo la clase Emitter para manejar cualquier tipo de partícula.
+
+
+
 
 ## Bitácora de aplicación 
 
