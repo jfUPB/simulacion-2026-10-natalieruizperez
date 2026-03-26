@@ -28,7 +28,7 @@ En el mismo draw se eliminan las partículas con el isDead().
 
 **6. ¿Por qué se recorre el array en orden inverso para eliminar? ¿Qué pasaría si no se hiciera así?**
 
-Se recorre el array en orden inverso para eliminar 
+Se recorre el array en orden inverso para eliminar los elementos mientras se recorren. Si no se hiciera asi borraría lo que no es.
 
 **7. Si no eliminaras nunca las partículas, ¿Qué pasaría con la memoria y el rendimiento? Haz el experimento: comenta la línea que elimina y observa el frame rate.**
 
@@ -38,10 +38,9 @@ Si no eliminara las partícula la memoria se llenaría el rendimiento no sería 
 
 Luego de probarlo se cumplió mi hipótesis, la simulación empezó a ir más lento.
 
-
 **8. ¿Qué elementos visuales usa para representar una partícula?**
 
-
+Se usan círculos, líneas,  relleno.
 
 **9. ¿Cómo se conecta el “tiempo de vida” con la apariencia visual?**
 
