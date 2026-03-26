@@ -99,8 +99,41 @@ Representación del ciclo del agua como un sistema donde todo está conectado en
 
 **Bocetos**
 
+![1000005660](https://github.com/user-attachments/assets/5975f269-00f9-40c9-9a0e-e9580d26b5d9)
+
+![1000005661](https://github.com/user-attachments/assets/54c02c46-dd66-4bdb-842a-4552fbfd93b4)
+
 **Mapa de decisiones**
 
+Sol:
+Representa el calor y activa la evaporación solo cuando el usuario interactúa. No aplica fuerzas, funciona como condición de activación. Se hace más intenso visualmente para dar feedback. La interacción representa la fuente de energía del sistema.
+
+Vapor:
+Se emite desde el lago cuando el sol está activo. Tiene una velocidad inicial hacia arriba con variación lateral y además una aceleración constante hacia arriba, lo que hace que flote de forma natural. Desaparece al llegar arriba para indicar que pasa a las nubes. Se visualiza como partículas suaves que se desvanecen. La interacción del usuario lo genera indirectamente.
+
+Nubes:
+Acumulan vapor y solo liberan gotas cuando el usuario las arrastra. No tienen fuerzas. No mueren, son persistentes. Su tamaño y color cambian según la cantidad de vapor para dar feedback visual. El usuario controla su posición para decidir dónde llueve.
+
+Lluvia (Drop - falling):
+Se emite desde la nube al interactuar. Tiene una aceleración constante hacia abajo que simula la gravedad. Desaparece al tocar el agua o cambiar de estado. Se visualiza como líneas para dar sensación de velocidad. El usuario controla cuándo y dónde ocurre.
+
+Infiltración:
+Es un cambio de estado al tocar la tierra. Deja de usar fuerzas y pasa a moverse con una velocidad constante hacia abajo. Desaparece al terminar el proceso, representando que el agua fue absorbida. Se visualiza haciéndose más pequeña. No hay interacción directa.
+
+Escorrentía:
+Está definida en el sistema pero no se utiliza en la lógica actual. Aunque tiene una aceleración diagonal pensada para simular flujo superficial, no ocurre porque nunca se activa. Conceptualmente representaría el agua que no se infiltra.
+
+Splash:
+Se emite al impacto con el agua. Tiene una velocidad inicial hacia arriba y luego una aceleración hacia abajo. Desaparece rápido. Se visualiza como partículas pequeñas. No tiene interacción directa, solo feedback visual.
+
+Lago:
+No emite partículas directamente, pero es el origen del vapor. No usa fuerzas, solo cambia de nivel según entradas y salidas. No muere. Se visualiza con ondas. El usuario lo afecta indirectamente.
+
+Planta:
+No emite partículas. No usa fuerzas físicas, solo cambios internos. Muere por exceso o falta de agua. Se visualiza creciendo y floreciendo. El usuario influye indirectamente al regarla y darle sol.
+
+Interacción del usuario:
+El usuario activa la evaporación y controla la lluvia moviendo las nubes. No crea elementos directamente, pero regula el sistema. Representa relaciones de causa y efecto dentro del ciclo.
 
 **Cloud**
 
