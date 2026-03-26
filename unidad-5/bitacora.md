@@ -53,6 +53,7 @@ En particle.js en el show() cambiaría únicamente el stroke en donde dice circl
 ### Actividad 02
 
 **1. ¿Qué responsabilidades que antes estaban en draw() ahora están dentro de la clase Emitter?**
+
 Es para encapsular y tener sistemas de sistemas
 
 **2. ¿Cuál es la ventaja de encapsular la lógica de emisión en una clase separada?**
