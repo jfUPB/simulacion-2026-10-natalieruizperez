@@ -27,7 +27,7 @@ Representa la dirección y como puede pintar.
 
 **4. ¿Cómo se convierte el vector consultado en una decisión de movimiento?**
 
-**5. Identifica parámetros importantes del sistema, por ejemplo:**
+**5. Identifica parámetros importantes del sistema, por ejemplo:**https://github.com/logout
 resolución,
 maxspeed,
 maxforce,
@@ -40,6 +40,6 @@ Además, responde:
 ¿Qué sensaciones visuales te sugiere?
 ¿En qué tipo de pieza musical imaginas que podría funcionar bien?
 ## Bitácora de aplicación 
-
+PANTALLA COMPLETA SIN DASHBOARD
 
 ## Bitácora de reflexión
