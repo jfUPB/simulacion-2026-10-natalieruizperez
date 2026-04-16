@@ -114,7 +114,7 @@ Se emite desde el lago cuando el sol está activo. Tiene una velocidad inicial h
 Nubes:
 Acumulan vapor y solo liberan gotas cuando el usuario las arrastra. No tienen fuerzas. No mueren, son persistentes. Su tamaño y color cambian según la cantidad de vapor para dar feedback visual. El usuario controla su posición para decidir dónde llueve.
 
-Lluvia (Drop - falling):
+Lluvia:
 Se emite desde la nube al interactuar. Tiene una aceleración constante hacia abajo que simula la gravedad. Desaparece al tocar el agua o cambiar de estado. Se visualiza como líneas para dar sensación de velocidad. El usuario controla cuándo y dónde ocurre.
 
 Infiltración:
@@ -725,8 +725,51 @@ https://editor.p5js.org/natalieruizperez/sketches/0j2h1_Vm3
 <img width="682" height="375" alt="image" src="https://github.com/user-attachments/assets/cb0f17e3-a34e-426b-9293-83fb18529706" />
 
 
+## Bitácora de aplicación 
+
+**1. Una partícula es una entidad con estado.**
+
+Eso quiere decir que guarda la posición, su vida y tiempo.
+
+**2.Una partícula tiene ciclo de vida.**
+
+La partícula se crea, vive y muere, es muy parecida a una persona en ese aspecto.
+
+**3.Un sistema de partículas gestiona colecciones dinámicas de elementos.**
+
+Varias partículas siguen ciertas leyes 
+
+**4.La creación y eliminación de partículas no es un detalle técnico menor, sino parte central del modelo.**
+
+Es fundamental crear y eliminar partículas para que el rendimiento no se vea afectado.
+
+**5.Debe haber separación entre la lógica de una partícula individual y la lógica del sistema/emisor.**
+
+La partícula vive y muere pero el sistema se encarga de mandar la orden y la partícula hace la acción por así decirlo.
+
+**6.Un emisor o particle system es una abstracción importante.**
+
+No entendí.
+
+**7.Pueden existir sistemas de sistemas.**
+
+Una forma mas fácil de verlo es como si fueran varias carpetas entonces yo puedo tener una carpeta con mas carpetas adentro.
+
+**8.Puede haber heterogeneidad usando herencia y polimorfismo.**
+Todavía me cuesta entender esos conceptos.
+
+**9.Las partículas pueden responder a fuerzas globales y locales.**
+
+Una partícula puede ser influenciada por una regla que aplica para todos y también tener reglas personales.
+
+**10.La representación visual puede variar sin cambiar el principio algorítmico de fondo.**
+
+Se puede cambiar lo que se ve sin que afecte lo que hace.
 
 
+Piensa en tu pieza del Apply: si la quisieras recrear en Unity (o TouchDesigner, o Blender), ¿Qué se mantendría igual y qué cambiaría? ¿Qué partes de tu diseño son independientes de la herramienta?
+
+Si lo fuera a recrear en blender la lógica e idea serían la misma, el aspecto cambiaría porque podría realizar modelos 3d para que se viera mejor y más realista o cartoon según lo que quiera. La estructura del sistema no cambiaría, seguiría existiendo el sol que activa la evaporación, las nubes que acumulan vapor y la lluvia que cae y cambia de estado al tocar diferentes superficies. Por ser blender usaría nodos o las físicas del programa y ya no podría usar la programación que hice en p5js.
 
 
 
