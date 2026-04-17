@@ -22,7 +22,7 @@ Por ejemplo con las fuerzas externas como la gravedad estas hacen lo mismo siemp
 
 ### Actividad 03
 
-** 1. ¿Cómo está construido el campo de flujo?**
+**1. ¿Cómo está construido el campo de flujo?**
 
 Un campo de flujo se podría entender como una cuadrícula en donde hay diferentes vectores con ciertos ángulos.
 
@@ -95,6 +95,12 @@ audio: Si no hay volumen las partículas se dispersan.
 
 Elegí usar flow Fields basados en ruido de perlin con desplazamiento individual (noiseOffset) para que cada partícula reaccione al entorno de forma orgánica pero independiente, sirve para transformar la explosión de un fuego artificial en una masa líquida dinámica.
 
+**Explicación de la relación audio-visual**
+Los fuegos artificiales varían de color según los tonos bajos, medios y altos. Para la visual escogí hacer fuegos artificiales porque la canción se llama así en inglés, pero no quise hacer todo tan literal porque se volvía repetitivo y aburrido de ver así que implemente modos diferentes para las partículas para que se sintiera más vivo. La mayoría del tiempo las partículas están cercas unas de otras siguiendo un movimiento especifíco pero cuando alcanza cierto nivel de los medios, bajo y el volumen se genera una explosión dispersiva para marcar con claridad ese momento clave. Quería representar lo que sentí cuando la escuché por primera vez ya que en los momentos en los que los fuegos artificiales crecen y se dispersan estan cargados de energía y motivación.
+
+**Evidencia del uso de IA**
+
+Usé IA para proponer variaciones en la implementación del sistema de partículas, optimizar el rendimiento (manejo de límites, pool de objetos y control de memoria) y depurar comportamientos en los distintos modos (dispersión, líquido, silencio y cambio aleatorio). El concepto, la lógica interactiva y la dirección visual fueron desarrollados por mí.
 
 **Código fuente.**
 
