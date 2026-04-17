@@ -41,35 +41,9 @@ Sirve de referencia.
 
 ## Bitácora de aplicación
 
-### Actividad 08
+### Actividad 06
 
-Apply: Aplicación 🛠
-Actividad 06: Diseño de un instrumento visual para un tema musical
-Diseña e implementa una pieza visual generativa en p5.js para interpretar un tema musical en tiempo real. La pieza debe funcionar como un instrumento visual: debe ocupar toda la pantalla, reaccionar al audio y permitir intervención performativa durante la ejecución. No debe mostrar dashboards, sliders, botones ni instrucciones visibles en escena.
 
-La prioridad de esta actividad no es producir código complejo por sí mismo, sino construir una propuesta visual con intención conceptual, criterio formal y posibilidad de interpretación en vivo. Primero debes diseñar la propuesta; luego puedes usar IA para ayudarte a materializarla, iterarla o depurarla, pero no para sustituir tu autoría.
-
-Requisitos conceptuales y técnicos
-Concepto visual
-Qué es: la idea central que orienta la pieza. Para qué sirve: para que la visual no sea solo una demostración técnica. Ejemplo: “Quiero traducir la sensación de acumulación y desborde de la canción en una masa de agentes que se comprime y explota”.
-
-Relación con el tema musical
-Qué es: la conexión entre el sonido y las decisiones del sistema visual. Para qué sirve: para que la música no sea un fondo decorativo, sino una dimensión estructural de la pieza. Ejemplo: “En las secciones más densas de la canción, los agentes se agrupan; en los silencios, se dispersan”.
-
-Pantalla completa
-Qué es: la pieza debe ocupar toda la pantalla durante la ejecución. Para qué sirve: para construir una experiencia inmersiva y escénica. Ejemplo: el canvas llena la ventana y no comparte espacio con paneles o menús visibles.
-
-Sin dashboards ni instrucciones en pantalla
-Qué es: la visual no debe mostrar sliders, texto explicativo, botones ni paneles de control visibles. Para qué sirve: para que funcione como obra performativa y no como prototipo de laboratorio. Ejemplo: si necesitas controles, deben estar resueltos con teclado, mouse, audio, MIDI o estados internos del sistema.
-
-Reactividad al audio
-Qué es: el sistema debe responder en tiempo real a características del audio. Para qué sirve: para que la visual dialogue con la música. Ejemplo: amplitud, energía o bandas de frecuencia modifican densidad, velocidad, agrupación o intensidad del movimiento.
-
-Interacción performativa
-Qué es: la pieza debe poder ser intervenida en vivo como si se tocara un instrumento visual. Para qué sirve: para que no sea una animación automática, sino una visual interpretable. Ejemplo: el mouse perturba el sistema, unas teclas cambian modos de comportamiento o un controlador altera parámetros durante la ejecución.
-
-Interacción con sentido musical
-Qué es: la interacción no debe ser arbitraria, sino útil para interpretar la pieza. Para qué sirve: para que cada gesto tenga un valor expresivo. Ejemplo: una tecla activa una variación visual adecuada para el clímax; otra reduce densidad para un momento de pausa.
 
 **Moodboard o referencias**
 Quiero implementar algo similar para el fondo
@@ -85,7 +59,6 @@ Quiero que en el climax se vea muy grande y abarque gran parte de la pantalla
 <img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/6003ff9c-e912-4cf2-8b34-7a4b6fea3abc" />
 
 
-
 **Bocetos**
 
 <img width="2048" height="1536" alt="1000005807" src="https://github.com/user-attachments/assets/b4241a94-3c0f-4a6c-842d-c3e5a9992ce0" />
@@ -95,75 +68,38 @@ Quiero que en el climax se vea muy grande y abarque gran parte de la pantalla
 La idea es que cuando la música este calmada hayan fuegos artificales azules y si está movida transcicione al rojo.
 
 
-Mapa de decisiones
-Qué es: un esquema que relaciona cada aspecto importante de la pieza con una intención de diseño. Para qué sirve: para hacer visible que el resultado proviene de decisiones conscientes. Ejemplo:
+**Mapa de decisiones**
 
-color oscuro: atmósfera contenida;
-flocking con baja cohesión: tensión e inestabilidad;
+Fuegos artificiales: La canción se llama firework.
+Colores de azul a rojo: crear transcición y poder representar los tonos bajos, medios y altos.
+Explosión: Sucede unicamente cuando los graves, medios y el volumen tienen respectivamente los valores 240, 170 y 0.2 respectivamente.
+Diferentes colores de partículas: Controlar manualmente los colores azul, morado y rojo.
+Dispersión: Para generar caos en el sistema cuando se active la exposión.
+Modo liquido: Sucede cuando ya hay una cantidad determinada de partículas en la pantalla.
+Flow field: Para generar un comportamiento indivial independiente
 respuesta a graves: sensación de peso.
-Mapa de interpretación
-Qué es: un esquema de cómo se “toca” la visual. Para qué sirve: para demostrar que la interacción fue diseñada como performance y no añadida al final. Ejemplo:
 
-mouse: perturba el flujo,
-A/S/D: cambia entre modos visuales,
-audio: controla energía general.
-Uso justificado del algoritmo
-Qué es: la explicación de por qué elegiste flow fields, flocking o una combinación. Para qué sirve: para que el algoritmo sea una decisión de diseño y no solo una obligación técnica. Ejemplo: “Elegí flow fields porque necesito una sensación de corriente continua más que un comportamiento grupal”.
+**Mapa de interpretación**
 
-Uso explícito de IA como materializador
-Qué es: un registro breve de qué le pediste a la IA y para qué. Para qué sirve: para distinguir entre apoyo técnico y autoría conceptual. Ejemplo: “Usé IA para proponer variaciones de implementación del trail y depurar un error; el concepto y la dirección visual fueron míos”.
-
-Nota
-
-Lo que se evalúa en esta actividad no es solo que “haya código funcionando”, sino que la pieza funcione como una propuesta visual diseñada, reactiva al audio e interpretable en vivo.
-
-📤 Bitácora
-
-Documenta el proceso completo:
-
-Concepto visual.
-Relación entre la visual y la canción.
-
-
-
-**Moodboard o referencias**
-Quiero implementar algo similar para el fondo
-
-<img width="1020" height="570" alt="image" src="https://github.com/user-attachments/assets/1ff657b8-3c65-4690-931e-ead353e93844" />
-
-También quiero que hayan varios fuegos artificiales pero de colores específicos
-
-<img width="547" height="350" alt="image" src="https://github.com/user-attachments/assets/ca8735df-0974-44de-a8cd-3e4311829ad0" />
-
-Quiero que en el climax se vea muy grande y abarque gran parte de la pantalla
-
-<img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/6003ff9c-e912-4cf2-8b34-7a4b6fea3abc" />
-
-
-**Bocetos**
-
-<img width="2048" height="1536" alt="1000005807" src="https://github.com/user-attachments/assets/b4241a94-3c0f-4a6c-842d-c3e5a9992ce0" />
-
-<img width="2048" height="1536" alt="1000005808" src="https://github.com/user-attachments/assets/6c15ba11-d801-467f-a752-ce9682b9f070" />
-
-La idea es que cuando la música este calmada hayan fuegos artificales azules y si está movida transcicione al rojo.
-
-
-Mapa de decisiones.
-
-
-Mapa de interpretación.
+click: Crea fuegos artificiales.
+1/2/3/0: Permite cambiar el color manualmente entre azul , morado, rojo y random respectivamente.
+u: Partículas siguen el ruido
+i: círculo en sentido horario
+o: círculo en sentido antihorario
+p: forma agrupamientos
+y: crea remolinos
+r: varia entre los modos explicados arriba.
+audio: Si no hay volumen las partículas se dispersan.
 
 **Justificación del algoritmo elegido.**
 
+Elegí usar flow Fields basados en ruido de perlin con desplazamiento individual (noiseOffset) para que cada partícula reaccione al entorno de forma orgánica pero independiente, sirve para transformar la explosión de un fuego artificial en una masa líquida dinámica.
 
-**Explicación de la relación audio-visual.**
-
-**Evidencia del uso de IA.**
 
 **Código fuente.**
 
 ```js
+
 let song;
 let fft;
 let amplitude; 
@@ -179,6 +115,27 @@ const MAX_FIREWORKS = 30;
 
 let currentMode = 0;
 
+let persistentParticles = [];        
+let persistentPool = [];             
+let liquidMode = false;
+let disperseMode = false;
+const PERSISTENT_THRESHOLD = 1800;   
+const PERSISTENT_CAP = 4000;        
+const PERSISTENT_MAX_AGE = 20 * 60;  
+
+const JOIN_DELAY_MIN = 6;    
+const JOIN_DELAY_MAX = 90;  
+
+
+let randomMode = false;               
+let randomModeInterval = 180;         
+let lastRandomChange = 0;           
+
+const SILENCE_THRESHOLD = 0.008;      
+const SILENCE_FADE_START = 60;        
+const SILENCE_MAX_ACCEL = 6.0;        
+let silenceTimer = 0;
+
 function preload() {
   song = loadSound('firework.mp3');
 }
@@ -192,15 +149,16 @@ function setup() {
   amplitude = new p5.Amplitude();
   amplitude.setInput(song); 
   background(0);
+  noStroke();
   
-  
+  for (let i = 0; i < 1200; i++) persistentPool.push(makeEmptyPersistent());
 }
-function draw() {
-  if (!started) {
-    return;
-  }
 
-  background(0, 0, 0, 25); 
+function draw() {
+  if (!started) return;
+
+  
+  background(0, 0, 0, 12);
 
   fft.analyze();
   let lowEnergy    = fft.getEnergy("bass");
@@ -208,6 +166,16 @@ function draw() {
   let highEnergy   = fft.getEnergy("treble");
   let voiceEnergy  = midEnergy;
   let vol = amplitude.getLevel() || 0;
+
+  
+  if (randomMode) updateRandomMode(vol);
+
+  
+  if (vol <= SILENCE_THRESHOLD) {
+    silenceTimer++;
+  } else {
+    silenceTimer = 0;
+  }
 
   let currentHue;
   let isRed = false;
@@ -230,6 +198,13 @@ function draw() {
   let freqGodMode = (lowEnergy >= 240 && midEnergy >= 170 && vol >= 0.2);
   let isClimax = godModeForced || freqGodMode || (fireworks.length > 40 && isRed);
 
+  
+  if (isClimax && !disperseMode) {
+    startDisperseMode(lowEnergy, midEnergy, vol);
+  } else if (!isClimax && disperseMode) {
+    stopDisperseMode();
+  }
+
   let explodeYMin, explodeYMax;
   if (currentHue <= 240) {
     explodeYMin = height * 0.60;
@@ -244,6 +219,7 @@ function draw() {
 
   let particleSizeBase = (currentHue <= 240) ? 3.5 : (currentHue <= 310) ? 2.5 : 1.5;
 
+  
   if (random(1) > 0.96) { 
     spheres.push(new MicroSphere(random(width), random(height)));
   }
@@ -253,9 +229,14 @@ function draw() {
     if (spheres[i].done()) spheres.splice(i, 1);
   }
 
-  let totalParticles = fireworks.reduce((sum, fw) => sum + fw.particles.length, 0);
+  
+  updatePersistentParticles();
+
+  
+  let totalParticles = fireworks.reduce((sum, fw) => sum + fw.particles.length + (fw.exploded ? 0 : 1), 0) + persistentParticles.length;
   if (totalParticles > MAX_PARTICLES) {
     let excess = totalParticles - MAX_PARTICLES;
+    
     let removed = 0;
     for (let i = fireworks.length - 1; i >= 0 && removed < excess; i--) {
       for (let j = fireworks[i].particles.length - 1; j >= 0 && removed < excess; j--) {
@@ -263,15 +244,26 @@ function draw() {
         removed++;
       }
     }
+    
+    while (removed < excess && persistentParticles.length > 0) {
+      recyclePersistent(persistentParticles.shift());
+      removed++;
+    }
   }
 
-  let spawnChance = isClimax ? 0.70 : 0.88;
+  
+  let spawnChance = disperseMode ? 0.92 : 0.88;
+  if (silenceTimer > SILENCE_FADE_START) {
+    
+    spawnChance = 0.995;
+  }
+
   if (fireworks.length < MAX_FIREWORKS) {
     if (voiceEnergy > 150 && random(1) > spawnChance) {
       let explodeY = random(explodeYMin, explodeYMax);
       fireworks.push(new Firework(
         random(width), height,
-        currentHue, vol, false, isClimax, particleSizeBase, explodeY, currentMode
+        currentHue, vol, false, disperseMode, particleSizeBase, explodeY, currentMode
       ));
     }
   }
@@ -280,28 +272,329 @@ function draw() {
     let explodeY = random(explodeYMin, explodeYMax);
     fireworks.push(new Firework(
       mouseX, mouseY,
-      currentHue, vol, true, isClimax, particleSizeBase, explodeY, currentMode
+      currentHue, vol, true, disperseMode, particleSizeBase, explodeY, currentMode
     ));
   }
 
   for (let i = fireworks.length - 1; i >= 0; i--) {
     fireworks[i].update();
     fireworks[i].show();
-    if (fireworks[i].done()) fireworks.splice(i, 1);
+    if (fireworks[i].done()) {
+      transferFireworkToPersistent(fireworks[i]);
+      fireworks.splice(i, 1);
+    }
+  }
+
+  
+  if (persistentParticles.length > PERSISTENT_CAP) {
+    let removeCount = persistentParticles.length - PERSISTENT_CAP;
+    for (let i = 0; i < removeCount; i++) recyclePersistent(persistentParticles.shift());
   }
 }
 
+
+
+function makeEmptyPersistent() {
+  return {
+    x: 0, y: 0, hue: 0, size: 2, age: 0, maxAge: PERSISTENT_MAX_AGE,
+    vx: 0, vy: 0, noiseOffset: 0, alive: false, id: 0,
+    
+    joinDelay: 0, joinTimer: 0, active: false, mode: 0
+  };
+}
+
+function getPersistentFromPool() {
+  if (persistentPool.length > 0) return persistentPool.pop();
+  return makeEmptyPersistent();
+}
+
+function recyclePersistent(obj) {
+  obj.alive = false;
+  obj.age = 0;
+  obj.vx = obj.vy = 0;
+  obj.joinDelay = 0;
+  obj.joinTimer = 0;
+  obj.active = false;
+  obj.mode = 0;
+  persistentPool.push(obj);
+}
+
+function transferFireworkToPersistent(fw) {
+  for (let p of fw.particles) {
+    let pp = getPersistentFromPool();
+    pp.x = p.pos.x;
+    pp.y = p.pos.y;
+    pp.hue = p.hue;
+    pp.size = p.isFirework ? 4 : (p.gigante ? random(6, 12) : p.sizeBase);
+    pp.age = 0;
+    pp.maxAge = PERSISTENT_MAX_AGE;
+   
+    pp.vx = p.vel.x * 0.12 + random(-0.05, 0.05);
+    pp.vy = p.vel.y * 0.12 + random(-0.05, 0.05);
+    pp.noiseOffset = random(1000);
+    pp.alive = true;
+    pp.id = millis() + random(10000);
+    
+    pp.joinDelay = floor(random(JOIN_DELAY_MIN, JOIN_DELAY_MAX));
+    pp.joinTimer = 0;
+    pp.active = false;
+    
+    pp.mode = currentMode;
+    persistentParticles.push(pp);
+    if (persistentParticles.length > PERSISTENT_CAP) {
+      recyclePersistent(persistentParticles.shift());
+    }
+  }
+  fw.particles.length = 0;
+}
+
+
+function updatePersistentParticles() {
+  let n = persistentParticles.length;
+  if (n === 0) return;
+
+  
+  
+  let activeCount = persistentParticles.reduce((acc, pp) => acc + (pp.alive && pp.active ? 1 : 0), 0);
+  if (!liquidMode && activeCount >= PERSISTENT_THRESHOLD && !disperseMode) liquidMode = true;
+  if (liquidMode && activeCount < PERSISTENT_THRESHOLD * 0.6) liquidMode = false;
+
+  
+  let cx = width * 0.5;
+  let cy = height * 0.45;
+
+  
+  let silenceFactor = 1.0;
+  if (silenceTimer > SILENCE_FADE_START) {
+    
+    let t = constrain((silenceTimer - SILENCE_FADE_START) / (SILENCE_FADE_START * 2), 0, 1);
+    silenceFactor = lerp(1.0, SILENCE_MAX_ACCEL, t);
+  }
+
+  
+  for (let i = persistentParticles.length - 1; i >= 0; i--) {
+    let pp = persistentParticles[i];
+    if (!pp || !pp.alive) continue;
+
+    
+    pp.age += silenceFactor;
+    if (pp.age > pp.maxAge) {
+      recyclePersistent(persistentParticles.splice(i, 1)[0]);
+      continue;
+    }
+
+    
+    if (!pp.active) {
+      pp.joinTimer += 1 * silenceFactor; 
+      
+      pp.x += sin((pp.joinTimer + pp.noiseOffset) * 0.02) * 0.12;
+      pp.y += cos((pp.joinTimer + pp.noiseOffset) * 0.02) * 0.12;
+
+      
+      let t = pp.joinDelay > 0 ? constrain(pp.joinTimer / pp.joinDelay, 0, 1) : 1;
+      applyModeInfluence(pp, cx, cy, 0.06 * t);
+
+      if (pp.joinTimer >= pp.joinDelay) {
+        pp.active = true;
+       
+        pp.vx += random(-0.25, 0.25);
+        pp.vy += random(-0.25, 0.25);
+      }
+     
+    }
+
+    
+    if (disperseMode) {
+      
+      let dx = pp.x - cx;
+      let dy = pp.y - cy;
+      let d = sqrt(dx*dx + dy*dy) + 0.001;
+      let strength = map(d, 0, max(width, height), 2.2, 0.6);
+      pp.vx += (dx / d) * strength * random(0.6, 1.2);
+      pp.vy += (dy / d) * strength * random(0.6, 1.2);
+
+      
+      let nval = noise(pp.noiseOffset + frameCount * 0.02);
+      pp.vx += map(nval, 0, 1, -0.4, 0.4);
+      pp.vy += map(nval, 0, 1, -0.4, 0.4);
+
+      
+      pp.vx *= 0.985;
+      pp.vy *= 0.985;
+    } else if (liquidMode) {
+      
+      let nval = noise((pp.x + pp.noiseOffset) * 0.0015, (pp.y + pp.noiseOffset) * 0.0015, frameCount * 0.003);
+      let angle = map(nval, 0, 1, 0, TWO_PI);
+      
+      pp.vx += cos(angle) * 0.10;
+      pp.vy += sin(angle) * 0.10;
+
+      
+      let toCx = (cx - pp.x) * 0.0006;
+      let toCy = (cy - pp.y) * 0.0006;
+      pp.vx += toCx;
+      pp.vy += toCy;
+
+     
+      applyModeInfluence(pp, cx, cy, 0.18);
+
+      
+      pp.vx *= 0.985;
+      pp.vy *= 0.985;
+    } else {
+      
+      pp.vx += random(-0.02, 0.02);
+      pp.vy += random(-0.02, 0.02);
+      
+      applyModeInfluence(pp, cx, cy, 0.03);
+      pp.vx *= 0.995;
+      pp.vy *= 0.995;
+    }
+
+   
+    pp.vx *= (silenceFactor > 1.0) ? 0.98 : 1.0;
+    pp.vy *= (silenceFactor > 1.0) ? 0.98 : 1.0;
+
+    pp.x += pp.vx;
+    pp.y += pp.vy;
+
+    
+    if (pp.x < 0) { pp.x = 0; pp.vx *= -0.4; }
+    if (pp.x > width) { pp.x = width; pp.vx *= -0.4; }
+    if (pp.y < 0) { pp.y = 0; pp.vy *= -0.4; }
+    if (pp.y > height) { pp.y = height; pp.vy *= -0.4; }
+  }
+
+  
+  push();
+  for (let i = 0; i < persistentParticles.length; i++) {
+    let pp = persistentParticles[i];
+    if (!pp || !pp.alive) continue;
+    
+    let alphaBase = map(pp.age, 0, pp.maxAge, 255, 40);
+    if (silenceTimer > SILENCE_FADE_START) {
+      
+      alphaBase = alphaBase / silenceFactor;
+    }
+    if (!pp.active) {
+      strokeWeight(pp.size + 1);
+      stroke(pp.hue, 200, 255, map(pp.joinTimer, 0, pp.joinDelay, 80, min(160, alphaBase)));
+      point(pp.x, pp.y);
+    } else {
+      strokeWeight(pp.size);
+      stroke(pp.hue, 200, 255, constrain(alphaBase, 0, 255));
+      point(pp.x, pp.y);
+    }
+  }
+  pop();
+}
+
+
+function applyModeInfluence(pp, cx, cy, strength) {
+  
+  let dx = pp.x - cx;
+  let dy = pp.y - cy;
+  let d = sqrt(dx*dx + dy*dy) + 0.001;
+
+  switch (pp.mode) {
+    case 1: 
+      // vector perpendicular (clockwise): (dy, -dx)
+      pp.vx += (dy / d) * strength * random(0.6, 1.1);
+      pp.vy += (-dx / d) * strength * random(0.6, 1.1);
+      break;
+    case 2: 
+      pp.vx += (-dy / d) * strength * random(0.6, 1.1);
+      pp.vy += (dx / d) * strength * random(0.6, 1.1);
+      break;
+    case 3: 
+      let pull = map(d, 0, max(width, height), 0.02, 0.6) * strength;
+      pp.vx += (-dx / d) * pull * random(0.8, 1.2);
+      pp.vy += (-dy / d) * pull * random(0.8, 1.2);
+      break;
+    case 4: 
+      let n = noise(pp.noiseOffset + frameCount * 0.01);
+      let swirlAngle = map(n, 0, 1, -PI, PI);
+      pp.vx += cos(swirlAngle) * strength * 0.6;
+      pp.vy += sin(swirlAngle) * strength * 0.6;
+      
+      pp.vx += (dy / d) * strength * 0.25;
+      pp.vy += (-dx / d) * strength * 0.25;
+      break;
+    default:
+      
+      break;
+  }
+}
+
+
+function startDisperseMode(low, mid, vol) {
+  disperseMode = true;
+  liquidMode = false;
+  
+  let sample = min(600, persistentParticles.length);
+  for (let k = 0; k < sample; k++) {
+    let idx = floor(random(persistentParticles.length));
+    let pp = persistentParticles[idx];
+    if (!pp || !pp.alive) continue;
+    
+    if (!pp.active) {
+      pp.joinDelay = max(3, floor(pp.joinDelay * 0.25));
+    }
+    let angle = random(TWO_PI);
+    let mag = map(vol, 0, 0.5, 1.2, 5.0) * random(0.8, 1.4);
+    pp.vx += cos(angle) * mag;
+    pp.vy += sin(angle) * mag;
+    
+    pp.maxAge = max(30, floor(pp.maxAge * 0.5));
+  }
+}
+
+
+function stopDisperseMode() {
+  disperseMode = false;
+  if (persistentParticles.length >= PERSISTENT_THRESHOLD * 0.8) liquidMode = true;
+}
+
+function updateRandomMode(vol) {
+  
+  
+
+  if (frameCount - lastRandomChange >= randomModeInterval) {
+    lastRandomChange = frameCount;
+    
+    let newMode = currentMode;
+    let attempts = 0;
+    while (newMode === currentMode && attempts < 8) {
+      newMode = floor(random(0, 5)); // 0..4
+      attempts++;
+    }
+    setMode(newMode);
+  }
+}
+
+
+
 function keyPressed() {
   if (!started && keyCode === ENTER) { 
-    song.play(); 
-    started = true; 
-    fullscreen(true); 
+    
+    if (song && !song.isPlaying()) {
+      song.play();
+    }
+    started = true;
+    
+    let c = document.querySelector('canvas');
+    if (c && c.requestFullscreen) {
+      c.requestFullscreen().catch(() => {});
+    } else if (c && c.webkitRequestFullscreen) {
+      c.webkitRequestFullscreen();
+    } else if (c && c.mozRequestFullScreen) {
+      c.mozRequestFullScreen();
+    } else if (c && c.msRequestFullscreen) {
+      c.msRequestFullscreen();
+    }
   }
 
-  if (keyCode === ESCAPE) {
-    fullscreen(false); 
-  }
-
+  
   if (key === '1') manualHue = 220;
   if (key === '2') manualHue = 280;
   if (key === '3') manualHue = 360;
@@ -311,11 +604,33 @@ function keyPressed() {
   }
   if (key === 'g' || key === 'G') godModeForced = !godModeForced;
 
-  if (key === 'u' || key === 'U') currentMode = 0;
-  if (key === 'i' || key === 'I') currentMode = 1;
-  if (key === 'o' || key === 'O') currentMode = 2;
-  if (key === 'p' || key === 'P') currentMode = 3;
-  if (key === 'y' || key === 'Y') currentMode = 4;
+  if (key === 'u' || key === 'U') setMode(0);
+  if (key === 'i' || key === 'I') setMode(1);
+  if (key === 'o' || key === 'O') setMode(2);
+  if (key === 'p' || key === 'P') setMode(3);
+  if (key === 'y' || key === 'Y') setMode(4);
+
+  if (key === 'r' || key === 'R') {
+    randomMode = !randomMode;
+    if (randomMode) {
+      lastRandomChange = frameCount - randomModeInterval; 
+    }
+  }
+}
+
+function setMode(m) {
+  currentMode = m;
+  
+  for (let pp of persistentParticles) {
+    if (pp && pp.alive) {
+      pp.mode = m;
+      
+      if (!pp.active) pp.joinDelay = max(3, floor(pp.joinDelay * 0.4));
+      
+      pp.vx += random(-0.2, 0.2);
+      pp.vy += random(-0.2, 0.2);
+    }
+  }
 }
 
 class Firework {
@@ -351,6 +666,10 @@ class Firework {
     for (let i = this.particles.length - 1; i >= 0; i--) {
       this.particles[i].applyForce(gravity);
       this.particles[i].update();
+      
+      if (silenceTimer > SILENCE_FADE_START) {
+        this.particles[i].lifespan -= floor(map(silenceTimer, SILENCE_FADE_START, SILENCE_FADE_START*3, 1, 6));
+      }
       if (this.particles[i].done()) this.particles.splice(i, 1);
     }
   }
@@ -360,11 +679,14 @@ class Firework {
     this.exploded = true;
     let count = this.gigante ? 550 : map(this.vol, 0, 0.5, 70, 180);
     for (let i = 0; i < count; i++) {
+      
       this.particles.push(new Particle(x, y, this.hue, false, 0, this.gigante, this.sizeBase, this.mode));
     }
   }
 
-  done() { return (this.exploded && this.particles.length === 0) || this.ttl < -30; }
+  done() { 
+    return (this.exploded && this.particles.every(p => p.lifespan < 20)) || this.ttl < -30; 
+  }
 
   show() {
     if (!this.exploded) this.firework.show();
@@ -416,7 +738,12 @@ class Particle {
         this.acc.add(attraction);
       }
       this.vel.mult(this.gigante ? 0.94 : 0.91);
-      this.lifespan -= this.gigante ? 3.2 : 2.5;
+      // si hay silencio prolongado, reducir lifespan más rápido
+      if (silenceTimer > SILENCE_FADE_START) {
+        this.lifespan -= map(silenceTimer, SILENCE_FADE_START, SILENCE_FADE_START*3, 2.5, 12);
+      } else {
+        this.lifespan -= this.gigante ? 3.2 : 2.5;
+      }
     }
     this.vel.add(this.acc);
     this.pos.add(this.vel);
@@ -461,7 +788,12 @@ class MicroSphere {
     noStroke();
     let pulse = map(vol, 0, 0.5, 1, 2.5); 
     let b = constrain(this.baseBrightness + map(vol, 0, 0.5, 0, 100), 0, 255);
-    fill(0, 0, b, this.opacity);
+    // si hay silencio prolongado, reducir brillo y opacidad
+    let alpha = this.opacity;
+    if (silenceTimer > SILENCE_FADE_START) {
+      alpha = alpha / lerp(1, SILENCE_MAX_ACCEL, constrain((silenceTimer - SILENCE_FADE_START) / (SILENCE_FADE_START*2), 0, 1));
+    }
+    fill(0, 0, b, alpha);
     ellipse(this.pos.x, this.pos.y, this.baseSize * pulse);
   }
   done() { return (this.lifespan <= 0 || this.opacity <= 0); }
@@ -470,34 +802,30 @@ class MicroSphere {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
+
 ```
 
 
 **Enlace al sketch.**
 
-https://editor.p5js.org/natalieruizperez/sketches/mvMvWGIZK
+[https://editor.p5js.org/natalieruizperez/sketches/mvMvWGIZK](https://editor.p5js.org/natalieruizperez/sketches/JzYlo0-Zi)
 
 **Capturas o registros de momentos importantes de la pieza.**
 
-<img width="1892" height="1079" alt="Captura de pantalla 2026-04-17 073000" src="https://github.com/user-attachments/assets/cbb52ad3-dc29-4796-918c-4c729e823da9" />
-
-<img width="1869" height="1079" alt="Captura de pantalla 2026-04-17 072949" src="https://github.com/user-attachments/assets/fa21264f-4512-49ae-a2a1-e63d3920374e" />
-
-<img width="1919" height="1079" alt="Captura de pantalla 2026-04-17 072946" src="https://github.com/user-attachments/assets/d8a7e1f8-9bc6-41cd-8b58-3c665fdf9dea" />
-
-<img width="1914" height="1079" alt="Captura de pantalla 2026-04-17 072920" src="https://github.com/user-attachments/assets/3b6850eb-a1c9-4d4f-af77-c11e5b7c0970" />
-
-<img width="1919" height="1079" alt="Captura de pantalla 2026-04-17 072903" src="https://github.com/user-attachments/assets/27a9817f-3f9f-45f6-ba70-0497234fdee7" />
 
 
-### Actividad 07
+<img width="889" height="749" alt="image" src="https://github.com/user-attachments/assets/323823ab-d2e9-4e93-afa3-6bf20d9bc625" />
+
+<img width="906" height="760" alt="image" src="https://github.com/user-attachments/assets/1a838ee7-8c60-46f0-9a94-2f8a78b3e023" />
+
+<img width="914" height="773" alt="image" src="https://github.com/user-attachments/assets/c6263aca-41a6-4fbb-8541-5a1d9b29d7ba" />
+
+<img width="899" height="768" alt="image" src="https://github.com/user-attachments/assets/5e11391f-c232-4125-96ba-4e3525a0924e" />
 
 
-Antes de ejecutar tu pieza debes explicar en 1 o 2 minutos:
+<img width="931" height="793" alt="image" src="https://github.com/user-attachments/assets/f26119a2-a9a5-42f9-a358-d16b5fbfad68" />
 
-**Cuál es el concepto de tu obra, cómo se relaciona con el tema musical**
 
-**Qué tipo de comportamiento visual diseñaste y de qué manera se interpreta o ejecuta en vivo.**
 
 
 ## Bitácora de reflexión
