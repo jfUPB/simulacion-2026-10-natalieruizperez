@@ -163,7 +163,7 @@ Mapa de interpretación.
 
 **Código fuente.**
 
-´´´
+```js
 let song;
 let fft;
 let amplitude; 
@@ -470,7 +470,7 @@ class MicroSphere {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
-´´´
+```
 
 
 **Enlace al sketch.**
