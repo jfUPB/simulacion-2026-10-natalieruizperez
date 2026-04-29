@@ -23,7 +23,9 @@ Comportamental: El movimiento es vertical como si se tratase de un cohete real. 
 
 <img width="563" height="1000" alt="image" src="https://github.com/user-attachments/assets/17f01e3c-b77a-4ff4-82c8-12393f0cce69" />
 
+
 <img width="576" height="1024" alt="image" src="https://github.com/user-attachments/assets/c2d974f2-fd47-4fc3-b82e-049723da58b6" />
+
 
 <img width="900" height="1600" alt="image" src="https://github.com/user-attachments/assets/128aff60-aac6-4559-ba15-326d122b8b17" />
 
@@ -31,6 +33,7 @@ Comportamental: El movimiento es vertical como si se tratase de un cohete real. 
 Bocetos
 
 <img width="1080" height="1920" alt="1000005835" src="https://github.com/user-attachments/assets/59ec0663-6d27-4e13-9dfa-7bd06ca9fed5" />
+
 
 <img width="1080" height="1920" alt="1000005834" src="https://github.com/user-attachments/assets/2d9bf995-9a53-4087-822e-54cc0d84a8fa" />
 
@@ -66,11 +69,12 @@ Mouse click y drag: Cambia manualmente el color la llama, el hue se modiffica cu
 La música dicta la física del entorno. Los graves controlan la velocidad a la que pasan las estrellas y planetas para simular aceleración. Los medios afectan el pulso de los cráteres y el color de los planetas, mientras que los agudos ensucian el fuego con ruido visual y hacen vibrar el cohete. El silencio final es la señal para encontrar la Luna y aterrizar.
 
 **Evidencia del uso de IA**
+
 Usé IA para integrar Matter.js con p5.js, específicamente para gestionar la memoria y crear la clase de las estrellas fugaces con rastro. También para el comportamiento de los planetas y que el lerp de la velocidad se sintiera orgánico y no a saltos. Además la use para la lógica del desprendimiento de las letras, la IA me ayudó a que al presionar espacio la letra se convierta en un cuerpo físico con gravedad y rotación independiente. El concepto de la palabra desintegrándose y la visual son míos, además de las decisiones relacionadas con los cambios de colores y tamaños.
 
 **Código fuente**
 
-```p5js
+```js
 
 const { Engine, World, Bodies, Body } = Matter;
 
